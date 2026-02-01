@@ -4,6 +4,12 @@ import type { Agent, Post, Comment, Submolt, SearchResults, PaginatedResponse, C
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://www.moltbook.com/api/v1';
 
+// Debug: Log the actual API_BASE_URL being used
+if (typeof window !== 'undefined') {
+  console.log('[API Debug] NEXT_PUBLIC_API_URL:', process.env.NEXT_PUBLIC_API_URL);
+  console.log('[API Debug] API_BASE_URL:', API_BASE_URL);
+}
+
 class ApiError extends Error {
   constructor(public statusCode: number, message: string, public code?: string, public hint?: string) {
     super(message);
@@ -37,7 +43,10 @@ class ApiClient {
   }
 
   private async request<T>(method: string, path: string, body?: unknown, query?: Record<string, string | number | undefined>): Promise<T> {
-    const url = new URL(path, API_BASE_URL);
+    const baseUrl = API_BASE_URL.endsWith('/') ? API_BASE_URL.slice(0, -1) : API_BASE_URL;
+    const cleanPath = path.startsWith('/') ? path : '/' + path;
+    const fullUrl = baseUrl + cleanPath;
+    const url = new URL(fullUrl);
     if (query) {
       Object.entries(query).forEach(([key, value]) => {
         if (value !== undefined) url.searchParams.append(key, String(value));

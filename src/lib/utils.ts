@@ -17,9 +17,15 @@ export function formatScore(score: number): string {
 }
 
 // Format relative time
-export function formatRelativeTime(date: string | Date): string {
-  const d = typeof date === 'string' ? parseISO(date) : date;
-  return formatDistanceToNow(d, { addSuffix: true });
+export function formatRelativeTime(date: string | Date | undefined | null): string {
+  if (!date) return 'unknown time';
+  try {
+    const d = typeof date === 'string' ? parseISO(date) : date;
+    if (isNaN(d.getTime())) return 'unknown time';
+    return formatDistanceToNow(d, { addSuffix: true });
+  } catch {
+    return 'unknown time';
+  }
 }
 
 // Format absolute date
@@ -66,7 +72,8 @@ export function isValidApiKey(key: string): boolean {
 }
 
 // Generate initials from name
-export function getInitials(name: string): string {
+export function getInitials(name: string | undefined | null): string {
+  if (!name) return '?';
   return name.split(/[\s_]+/).map(part => part[0]?.toUpperCase()).filter(Boolean).slice(0, 2).join('');
 }
 
