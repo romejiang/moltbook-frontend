@@ -114,18 +114,18 @@ export function PostCard({ post, isCompact = false, showSubmolt = true, onVote }
           <div className="flex items-center gap-1 mt-3">
             <Link href={getPostUrl(post.id, post.submolt)} className="flex items-center gap-1.5 px-2 py-1 text-sm text-muted-foreground hover:bg-muted rounded transition-colors">
               <MessageSquare className="h-4 w-4" />
-              <span>{post.commentCount} comments</span>
+              <span>{post.commentCount} 评论</span>
             </Link>
             
             <button className="flex items-center gap-1.5 px-2 py-1 text-sm text-muted-foreground hover:bg-muted rounded transition-colors">
               <Share2 className="h-4 w-4" />
-              <span className="hidden sm:inline">Share</span>
+              <span className="hidden sm:inline">分享</span>
             </button>
             
             {isAuthenticated && (
               <button className={cn('flex items-center gap-1.5 px-2 py-1 text-sm text-muted-foreground hover:bg-muted rounded transition-colors', post.isSaved && 'text-primary')}>
                 <Bookmark className={cn('h-4 w-4', post.isSaved && 'fill-current')} />
-                <span className="hidden sm:inline">{post.isSaved ? 'Saved' : 'Save'}</span>
+                <span className="hidden sm:inline">{post.isSaved ? '已保存' : '保存'}</span>
               </button>
             )}
             
@@ -137,10 +137,10 @@ export function PostCard({ post, isCompact = false, showSubmolt = true, onVote }
               {showMenu && (
                 <div className="absolute right-0 top-full mt-1 w-40 rounded-md border bg-popover shadow-lg z-10">
                   <button className="w-full flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted text-left">
-                    <Eye className="h-4 w-4" /> Hide post
+                    <Eye className="h-4 w-4" /> 隐藏帖子
                   </button>
                   <button className="w-full flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted text-left text-destructive">
-                    <Flag className="h-4 w-4" /> Report
+                    <Flag className="h-4 w-4" /> 举报
                   </button>
                 </div>
               )}
@@ -164,10 +164,10 @@ export function PostList({ posts, isLoading, showSubmolt = true }: { posts: Post
     );
   }
   
-  if (posts.length === 0) {
+    if (posts.length === 0) {
     return (
       <div className="text-center py-12">
-        <p className="text-muted-foreground">No posts yet</p>
+        <p className="text-muted-foreground">暂无帖子</p>
       </div>
     );
   }
@@ -214,10 +214,10 @@ export function PostCardSkeleton() {
 // Feed Sort Tabs
 export function FeedSortTabs({ value, onChange }: { value: string; onChange: (value: string) => void }) {
   const tabs = [
-    { value: 'hot', label: 'Hot', icon: '🔥' },
-    { value: 'new', label: 'New', icon: '✨' },
-    { value: 'top', label: 'Top', icon: '📈' },
-    { value: 'rising', label: 'Rising', icon: '🚀' },
+    { value: 'hot', label: '热门', icon: '🔥' },
+    { value: 'new', label: '最新', icon: '✨' },
+    { value: 'top', label: '最佳', icon: '📈' },
+    { value: 'rising', label: '上升', icon: '🚀' },
   ];
   
   return (
@@ -257,7 +257,7 @@ export function CreatePostCard({ submolt }: { submolt?: string }) {
           onClick={openCreatePost}
           className="flex-1 px-4 py-2 text-left text-muted-foreground bg-muted rounded-md hover:bg-muted/80 transition-colors"
         >
-          Create a post...
+          发布帖子...
         </button>
       </div>
     </Card>

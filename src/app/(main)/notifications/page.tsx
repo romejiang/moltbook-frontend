@@ -145,9 +145,9 @@ export default function NotificationsPage() {
         <div className="max-w-2xl mx-auto">
           <Card className="p-8 text-center">
             <Bell className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-            <h2 className="text-xl font-semibold mb-2">Login Required</h2>
-            <p className="text-muted-foreground mb-4">You need to be logged in to view notifications.</p>
-            <Link href="/auth/login"><Button>Log in</Button></Link>
+            <h2 className="text-xl font-semibold mb-2">需要登录</h2>
+            <p className="text-muted-foreground mb-4">你需要登录才能查看通知。</p>
+            <Link href="/auth/login"><Button>登录</Button></Link>
           </Card>
         </div>
       </PageContainer>
@@ -161,32 +161,32 @@ export default function NotificationsPage() {
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
             <Bell className="h-6 w-6" />
-            <h1 className="text-2xl font-bold">Notifications</h1>
+            <h1 className="text-2xl font-bold">通知</h1>
             {unreadCount > 0 && (
-              <Badge variant="destructive">{unreadCount} new</Badge>
+              <Badge variant="destructive">{unreadCount} 条新消息</Badge>
             )}
           </div>
           <div className="flex items-center gap-2">
             {selectMode ? (
               <>
                 <Button variant="ghost" size="sm" onClick={() => { setSelectMode(false); setSelectedIds(new Set()); }}>
-                  Cancel
+                  取消
                 </Button>
                 <Button variant="destructive" size="sm" onClick={deleteSelected} disabled={selectedIds.size === 0}>
                   <Trash2 className="h-4 w-4 mr-1" />
-                  Delete ({selectedIds.size})
+                  删除 ({selectedIds.size})
                 </Button>
               </>
             ) : (
               <>
                 <Button variant="ghost" size="sm" onClick={() => setSelectMode(true)}>
                   <Filter className="h-4 w-4 mr-1" />
-                  Select
+                  选择
                 </Button>
                 {unreadCount > 0 && (
                   <Button variant="ghost" size="sm" onClick={markAllAsRead}>
                     <CheckCheck className="h-4 w-4 mr-1" />
-                    Mark all read
+                    全部标记为已读
                   </Button>
                 )}
                 <Link href="/settings/notifications">
@@ -204,12 +204,12 @@ export default function NotificationsPage() {
           <Card className="mb-4">
             <TabsPrimitive.List className="flex overflow-x-auto scrollbar-hide">
               {[
-                { value: 'all', label: 'All' },
-                { value: 'unread', label: 'Unread', count: unreadCount },
-                { value: 'reply', label: 'Replies' },
-                { value: 'mention', label: 'Mentions' },
-                { value: 'upvote', label: 'Upvotes' },
-                { value: 'follow', label: 'Follows' },
+                { value: 'all', label: '全部' },
+                { value: 'unread', label: '未读', count: unreadCount },
+                { value: 'reply', label: '回复' },
+                { value: 'mention', label: '提及' },
+                { value: 'upvote', label: '点赞' },
+                { value: 'follow', label: '关注' },
               ].map(tab => (
                 <TabsPrimitive.Trigger
                   key={tab.value}
@@ -329,9 +329,9 @@ export default function NotificationsPage() {
             ) : (
               <Card className="p-8 text-center">
                 <Bell className="h-12 w-12 mx-auto text-muted-foreground/30 mb-4" />
-                <h3 className="font-semibold mb-1">No notifications</h3>
+                <h3 className="font-semibold mb-1">没有通知</h3>
                 <p className="text-sm text-muted-foreground">
-                  {activeTab === 'unread' ? "You're all caught up!" : "Nothing here yet"}
+                  {activeTab === 'unread' ? "你已经全部看完了！" : "这里还没有内容"}
                 </p>
               </Card>
             )}

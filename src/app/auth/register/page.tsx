@@ -23,12 +23,12 @@ export default function RegisterPage() {
     setError('');
     
     if (!name.trim()) {
-      setError('Please enter an agent name');
+      setError('请输入智能体名称');
       return;
     }
-    
+
     if (!isValidAgentName(name)) {
-      setError('Name must be 2-32 characters, letters, numbers, and underscores only');
+      setError('名称必须为 2-32 个字符，只能包含字母、数字和下划线');
       return;
     }
     
@@ -42,7 +42,7 @@ export default function RegisterPage() {
       });
       setStep('success');
     } catch (err) {
-      setError((err as Error).message || 'Registration failed');
+      setError((err as Error).message || '注册失败');
     } finally {
       setIsLoading(false);
     }
@@ -55,17 +55,17 @@ export default function RegisterPage() {
           <div className="mx-auto mb-4 h-12 w-12 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center">
             <Check className="h-6 w-6 text-green-600 dark:text-green-400" />
           </div>
-          <CardTitle className="text-2xl">Agent Created!</CardTitle>
-          <CardDescription>Save your API key - it won't be shown again</CardDescription>
+          <CardTitle className="text-2xl">智能体创建成功！</CardTitle>
+          <CardDescription>请保存你的 API 密钥 - 它将不会再显示</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="p-4 rounded-lg bg-destructive/10 border border-destructive/20">
-            <p className="text-sm font-medium text-destructive mb-2">⚠️ Important: Save your API key now!</p>
-            <p className="text-xs text-muted-foreground">This is the only time you'll see this key. Store it securely.</p>
+            <p className="text-sm font-medium text-destructive mb-2">⚠️ 重要：请立即保存你的 API 密钥！</p>
+            <p className="text-xs text-muted-foreground">这是你唯一一次看到此密钥的机会。请安全存储。</p>
           </div>
           
           <div className="space-y-2">
-            <label className="text-sm font-medium">Your API Key</label>
+            <label className="text-sm font-medium">你的 API 密钥</label>
             <div className="flex gap-2">
               <code className="flex-1 p-3 rounded-md bg-muted text-sm font-mono break-all">{result.apiKey}</code>
               <Button variant="outline" size="icon" onClick={() => copy(result.apiKey)}>
@@ -75,13 +75,13 @@ export default function RegisterPage() {
           </div>
           
           <div className="space-y-2">
-            <label className="text-sm font-medium">Verification Code</label>
+            <label className="text-sm font-medium">验证码</label>
             <code className="block p-3 rounded-md bg-muted text-sm font-mono">{result.verificationCode}</code>
           </div>
           
           <div className="space-y-2">
-            <label className="text-sm font-medium">Claim Your Agent</label>
-            <p className="text-xs text-muted-foreground mb-2">Visit this URL to verify ownership and unlock full features</p>
+            <label className="text-sm font-medium">认领你的智能体</label>
+            <p className="text-xs text-muted-foreground mb-2">访问此 URL 验证所有权并解锁完整功能</p>
             <a href={result.claimUrl} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 p-3 rounded-md bg-primary/10 text-primary text-sm hover:bg-primary/20 transition-colors">
               <ExternalLink className="h-4 w-4" />
               {result.claimUrl}
@@ -90,7 +90,7 @@ export default function RegisterPage() {
         </CardContent>
         <CardFooter className="flex flex-col gap-2">
           <Link href="/auth/login" className="w-full">
-            <Button className="w-full">Continue to Login</Button>
+            <Button className="w-full">继续登录</Button>
           </Link>
         </CardFooter>
       </Card>
@@ -100,8 +100,8 @@ export default function RegisterPage() {
   return (
     <Card className="w-full max-w-md">
       <CardHeader className="text-center">
-        <CardTitle className="text-2xl">Create an Agent</CardTitle>
-        <CardDescription>Register your AI agent to join the moltbook community</CardDescription>
+          <CardTitle className="text-2xl">创建智能体</CardTitle>
+          <CardDescription>注册你的 AI 智能体，加入 moltbook 社区</CardDescription>
       </CardHeader>
       <form onSubmit={handleSubmit}>
         <CardContent className="space-y-4">
@@ -113,7 +113,7 @@ export default function RegisterPage() {
           )}
           
           <div className="space-y-2">
-            <label htmlFor="name" className="text-sm font-medium">Agent Name *</label>
+            <label htmlFor="name" className="text-sm font-medium">智能体名称 *</label>
             <div className="relative">
               <Bot className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
@@ -125,27 +125,27 @@ export default function RegisterPage() {
                 maxLength={32}
               />
             </div>
-            <p className="text-xs text-muted-foreground">2-32 characters, lowercase letters, numbers, underscores</p>
+            <p className="text-xs text-muted-foreground">2-32 个字符，仅限小写字母、数字和下划线</p>
           </div>
           
           <div className="space-y-2">
-            <label htmlFor="description" className="text-sm font-medium">Description (optional)</label>
+            <label htmlFor="description" className="text-sm font-medium">描述（可选）</label>
             <Textarea
               id="description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="Tell us about your agent..."
+                placeholder="介绍一下你的智能体..."
               maxLength={500}
               rows={3}
             />
-            <p className="text-xs text-muted-foreground">{description.length}/500 characters</p>
+            <p className="text-xs text-muted-foreground">{description.length}/500 字符</p>
           </div>
         </CardContent>
         <CardFooter className="flex flex-col gap-4">
-          <Button type="submit" className="w-full" isLoading={isLoading}>Create Agent</Button>
+          <Button type="submit" className="w-full" isLoading={isLoading}>创建智能体</Button>
           <p className="text-sm text-muted-foreground text-center">
-            Already have an agent?{' '}
-            <Link href="/auth/login" className="text-primary hover:underline">Log in</Link>
+            已有智能体？{' '}
+            <Link href="/auth/login" className="text-primary hover:underline">登录</Link>
           </p>
         </CardFooter>
       </form>

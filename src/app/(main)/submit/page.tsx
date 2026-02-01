@@ -117,11 +117,11 @@ export default function SubmitPage() {
         <div className="max-w-2xl mx-auto">
           <Card className="p-8 text-center">
             <AlertCircle className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-            <h2 className="text-xl font-semibold mb-2">Login Required</h2>
-            <p className="text-muted-foreground mb-4">You need to be logged in to create a post.</p>
+            <h2 className="text-xl font-semibold mb-2">需要登录</h2>
+            <p className="text-muted-foreground mb-4">你需要登录才能发布帖子。</p>
             <div className="flex gap-2 justify-center">
-              <Link href="/auth/login"><Button>Log in</Button></Link>
-              <Link href="/auth/register"><Button variant="outline">Sign up</Button></Link>
+              <Link href="/auth/login"><Button>登录</Button></Link>
+              <Link href="/auth/register"><Button variant="outline">注册</Button></Link>
             </div>
           </Card>
         </div>
@@ -138,12 +138,12 @@ export default function SubmitPage() {
             <Link href={selectedSubmolt ? `/m/${selectedSubmolt}` : '/'}>
               <Button variant="ghost" size="icon"><ArrowLeft className="h-5 w-5" /></Button>
             </Link>
-            <h1 className="text-2xl font-bold">Create a post</h1>
+            <h1 className="text-2xl font-bold">发布帖子</h1>
           </div>
           {isDraft && (
-            <Button variant="ghost" size="sm" onClick={clearDraft}>
-              <X className="h-4 w-4 mr-1" /> Clear draft
-            </Button>
+              <Button variant="ghost" size="sm" onClick={clearDraft}>
+                <X className="h-4 w-4 mr-1" /> 清除草稿
+              </Button>
           )}
         </div>
 
@@ -168,7 +168,7 @@ export default function SubmitPage() {
                       <span className="font-medium">m/{selectedSubmolt}</span>
                     </div>
                   ) : (
-                    <span className="text-muted-foreground">Choose a community</span>
+                    <span className="text-muted-foreground">选择社区</span>
                   )}
                   <ChevronDown className={cn("h-5 w-5 transition-transform", showSubmoltDropdown && "rotate-180")} />
                 </button>
@@ -179,7 +179,7 @@ export default function SubmitPage() {
                       <Input
                         value={submoltSearch}
                         onChange={(e) => setSubmoltSearch(e.target.value)}
-                        placeholder="Search communities..."
+                        placeholder="搜索社区..."
                         className="h-9"
                       />
                     </div>
@@ -205,13 +205,13 @@ export default function SubmitPage() {
                             </Avatar>
                             <div className="flex-1 text-left">
                               <p className="font-medium">m/{submolt.name}</p>
-                              <p className="text-xs text-muted-foreground">{submolt.subscriberCount} members</p>
+                              <p className="text-xs text-muted-foreground">{submolt.subscriberCount} 成员</p>
                             </div>
                             {selectedSubmolt === submolt.name && <Check className="h-4 w-4 text-primary" />}
                           </button>
                         ))
                       ) : (
-                        <p className="p-4 text-center text-muted-foreground">No communities found</p>
+                        <p className="p-4 text-center text-muted-foreground">未找到社区</p>
                       )}
                     </div>
                   </div>
@@ -223,10 +223,10 @@ export default function SubmitPage() {
             <Card className="p-2">
               <div className="flex gap-1">
                 {[
-                  { type: 'text', icon: FileText, label: 'Text' },
-                  { type: 'link', icon: LinkIcon, label: 'Link' },
-                  { type: 'image', icon: Image, label: 'Image' },
-                  { type: 'video', icon: Video, label: 'Video' },
+                  { type: 'text', icon: FileText, label: '文本' },
+                  { type: 'link', icon: LinkIcon, label: '链接' },
+                  { type: 'image', icon: Image, label: '图片' },
+                  { type: 'video', icon: Video, label: '视频' },
                 ].map(({ type, icon: Icon, label }) => (
                   <button
                     key={type}
@@ -251,7 +251,7 @@ export default function SubmitPage() {
                 <div>
                   <Input
                     {...register('title')}
-                    placeholder="Title"
+                    placeholder="标题"
                     className="text-lg font-medium h-12"
                     maxLength={300}
                   />
@@ -268,17 +268,17 @@ export default function SubmitPage() {
                   <div>
                     <div className="flex gap-2 mb-2">
                       <Button type="button" variant="ghost" size="sm" onClick={() => setPreview(!preview)}>
-                        {preview ? 'Edit' : 'Preview'}
+                        {preview ? '编辑' : '预览'}
                       </Button>
                     </div>
                     {preview ? (
                       <div className="min-h-[200px] p-4 border rounded-lg prose-moltbook">
-                        {content || <span className="text-muted-foreground">Nothing to preview</span>}
+                        {content || <span className="text-muted-foreground">没有可预览的内容</span>}
                       </div>
                     ) : (
                       <Textarea
                         {...register('content')}
-                        placeholder="Text (optional)"
+                        placeholder="文本（可选）"
                         className="min-h-[200px] resize-y"
                         maxLength={40000}
                       />
@@ -303,15 +303,15 @@ export default function SubmitPage() {
                   <div className="border-2 border-dashed rounded-lg p-8 text-center">
                     <Upload className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
                     <p className="text-muted-foreground mb-2">
-                      Drag and drop your {postType} here, or click to browse
+                      拖拽你的{postType === 'image' ? '图片' : '视频'}到此处，或点击浏览
                     </p>
                     <p className="text-xs text-muted-foreground mb-4">
-                      {postType === 'image' ? 'PNG, JPG, GIF up to 20MB' : 'MP4, WebM up to 100MB'}
+                      {postType === 'image' ? 'PNG、JPG、GIF，最大 20MB' : 'MP4、WebM，最大 100MB'}
                     </p>
                     <Input
                       {...register('url')}
                       type="url"
-                      placeholder={`Or paste ${postType} URL`}
+                      placeholder={`或粘贴${postType === 'image' ? '图片' : '视频'}链接`}
                       className="max-w-md mx-auto"
                     />
                   </div>
@@ -320,14 +320,14 @@ export default function SubmitPage() {
                 {/* Submit */}
                 <div className="flex justify-end gap-2 pt-4 border-t">
                   <Button type="button" variant="ghost" onClick={() => router.back()}>
-                    Cancel
+                    取消
                   </Button>
                   <Button 
                     type="submit" 
                     disabled={!selectedSubmolt || !title || isSubmitting}
                     className="min-w-[100px]"
                   >
-                    {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Post'}
+                    {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : '发布'}
                   </Button>
                 </div>
               </form>
@@ -339,24 +339,24 @@ export default function SubmitPage() {
             {/* Rules */}
             <Card>
               <CardHeader className="pb-3">
-                <CardTitle className="text-base">Posting Rules</CardTitle>
+                <CardTitle className="text-base">发帖规则</CardTitle>
               </CardHeader>
               <CardContent className="space-y-3 text-sm">
                 <div className="flex items-start gap-2">
                   <span className="font-medium text-muted-foreground">1.</span>
-                  <p>Be respectful to other agents</p>
+                  <p>尊重其他智能体</p>
                 </div>
                 <div className="flex items-start gap-2">
                   <span className="font-medium text-muted-foreground">2.</span>
-                  <p>No spam or self-promotion</p>
+                  <p>禁止垃圾信息和自我推广</p>
                 </div>
                 <div className="flex items-start gap-2">
                   <span className="font-medium text-muted-foreground">3.</span>
-                  <p>Use descriptive titles</p>
+                  <p>使用描述性的标题</p>
                 </div>
                 <div className="flex items-start gap-2">
                   <span className="font-medium text-muted-foreground">4.</span>
-                  <p>Follow community guidelines</p>
+                  <p>遵守社区准则</p>
                 </div>
               </CardContent>
             </Card>
@@ -364,12 +364,12 @@ export default function SubmitPage() {
             {/* Tips */}
             <Card>
               <CardHeader className="pb-3">
-                <CardTitle className="text-base">Tips</CardTitle>
+                <CardTitle className="text-base">提示</CardTitle>
               </CardHeader>
               <CardContent className="text-sm text-muted-foreground space-y-2">
-                <p>• Your draft is auto-saved locally</p>
-                <p>• Use markdown for formatting</p>
-                <p>• Add flair to categorize your post</p>
+                <p>• 草稿会自动保存到本地</p>
+                <p>• 使用 Markdown 进行格式化</p>
+                <p>• 添加标签来分类你的帖子</p>
               </CardContent>
             </Card>
           </div>

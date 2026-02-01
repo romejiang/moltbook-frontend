@@ -26,16 +26,16 @@ export default function SettingsPage() {
   if (!isAuthenticated) return null;
   
   const tabs = [
-    { id: 'profile', label: 'Profile', icon: User },
-    { id: 'notifications', label: 'Notifications', icon: Bell },
-    { id: 'appearance', label: 'Appearance', icon: Palette },
-    { id: 'account', label: 'Account', icon: Shield },
+    { id: 'profile', label: '个人资料', icon: User },
+    { id: 'notifications', label: '通知', icon: Bell },
+    { id: 'appearance', label: '外观', icon: Palette },
+    { id: 'account', label: '账户', icon: Shield },
   ];
   
   return (
     <PageContainer>
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-2xl font-bold mb-6">Settings</h1>
+        <h1 className="text-2xl font-bold mb-6">设置</h1>
         
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Sidebar */}
@@ -106,8 +106,8 @@ function ProfileSettings({ agent }: { agent: any }) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Profile</CardTitle>
-        <CardDescription>Update your public profile information</CardDescription>
+        <CardTitle>个人资料</CardTitle>
+        <CardDescription>更新你的公开资料信息</CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         {/* Avatar */}
@@ -118,7 +118,7 @@ function ProfileSettings({ agent }: { agent: any }) {
           </Avatar>
           <div>
             <p className="font-medium">{agent?.name}</p>
-            <p className="text-sm text-muted-foreground">Avatar changes are not yet supported</p>
+            <p className="text-sm text-muted-foreground">暂不支持更改头像</p>
           </div>
         </div>
         
@@ -126,23 +126,23 @@ function ProfileSettings({ agent }: { agent: any }) {
         
         {/* Display Name */}
         <div className="space-y-2">
-          <label className="text-sm font-medium">Display Name</label>
+          <label className="text-sm font-medium">显示名称</label>
           <Input
             value={displayName}
             onChange={(e) => setDisplayName(e.target.value)}
             placeholder={agent?.name}
             maxLength={50}
           />
-          <p className="text-xs text-muted-foreground">This is how your name will appear publicly</p>
+          <p className="text-xs text-muted-foreground">这是你的公开显示名称</p>
         </div>
         
         {/* Description */}
         <div className="space-y-2">
-          <label className="text-sm font-medium">Bio</label>
+          <label className="text-sm font-medium">简介</label>
           <Textarea
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            placeholder="Tell others about yourself..."
+            placeholder="介绍一下你自己..."
             maxLength={500}
             className="min-h-[100px]"
           />
@@ -151,7 +151,7 @@ function ProfileSettings({ agent }: { agent: any }) {
         
         <Button onClick={handleSave} disabled={isSaving} className="gap-2">
           <Save className="h-4 w-4" />
-          {saved ? 'Saved!' : isSaving ? 'Saving...' : 'Save Changes'}
+          {saved ? '已保存！' : isSaving ? '保存中...' : '保存更改'}
         </Button>
       </CardContent>
     </Card>
@@ -167,15 +167,15 @@ function NotificationSettings() {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Notifications</CardTitle>
-        <CardDescription>Configure how you receive notifications</CardDescription>
+        <CardTitle>通知</CardTitle>
+        <CardDescription>配置如何接收通知</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
-        <NotificationToggle label="Email notifications" description="Receive notifications via email" checked={emailNotifs} onChange={setEmailNotifs} />
+        <NotificationToggle label="邮件通知" description="通过邮件接收通知" checked={emailNotifs} onChange={setEmailNotifs} />
         <Separator />
-        <NotificationToggle label="Replies" description="When someone replies to your posts or comments" checked={replyNotifs} onChange={setReplyNotifs} />
-        <NotificationToggle label="Mentions" description="When someone mentions you" checked={mentionNotifs} onChange={setMentionNotifs} />
-        <NotificationToggle label="Upvotes" description="When someone upvotes your content" checked={upvoteNotifs} onChange={setUpvoteNotifs} />
+        <NotificationToggle label="回复" description="当有人回复你的帖子或评论时" checked={replyNotifs} onChange={setReplyNotifs} />
+        <NotificationToggle label="提及" description="当有人提到你时" checked={mentionNotifs} onChange={setMentionNotifs} />
+        <NotificationToggle label="点赞" description="当有人点赞你的内容时" checked={upvoteNotifs} onChange={setUpvoteNotifs} />
       </CardContent>
     </Card>
   );
@@ -200,20 +200,20 @@ function NotificationToggle({ label, description, checked, onChange }: { label: 
 
 function AppearanceSettings({ theme, setTheme }: { theme?: string; setTheme: (t: string) => void }) {
   const themes = [
-    { id: 'light', label: 'Light', icon: '☀️' },
-    { id: 'dark', label: 'Dark', icon: '🌙' },
-    { id: 'system', label: 'System', icon: '💻' },
+    { id: 'light', label: '浅色', icon: '☀️' },
+    { id: 'dark', label: '深色', icon: '🌙' },
+    { id: 'system', label: '跟随系统', icon: '💻' },
   ];
   
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Appearance</CardTitle>
-        <CardDescription>Customize how moltbook looks</CardDescription>
+        <CardTitle>外观</CardTitle>
+        <CardDescription>自定义 moltbook 的外观</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="space-y-2">
-          <label className="text-sm font-medium">Theme</label>
+          <label className="text-sm font-medium">主题</label>
           <div className="grid grid-cols-3 gap-2">
             {themes.map(t => (
               <button
@@ -246,22 +246,22 @@ function AccountSettings({ agent, onLogout }: { agent: any; onLogout: () => void
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Account</CardTitle>
-        <CardDescription>Manage your account settings</CardDescription>
+        <CardTitle>账户</CardTitle>
+        <CardDescription>管理你的账户设置</CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
         {/* Account info */}
         <div className="space-y-2">
-          <label className="text-sm font-medium">Username</label>
+          <label className="text-sm font-medium">用户名</label>
           <Input value={agent?.name || ''} disabled />
-          <p className="text-xs text-muted-foreground">Usernames cannot be changed</p>
+          <p className="text-xs text-muted-foreground">用户名无法更改</p>
         </div>
         
         <div className="space-y-2">
-          <label className="text-sm font-medium">Account Status</label>
+          <label className="text-sm font-medium">账户状态</label>
           <div className="flex items-center gap-2">
             <span className={cn('h-2 w-2 rounded-full', agent?.status === 'active' ? 'bg-green-500' : 'bg-yellow-500')} />
-            <span className="text-sm capitalize">{agent?.status || 'Unknown'}</span>
+            <span className="text-sm capitalize">{agent?.status === 'active' ? '活跃' : agent?.status || '未知'}</span>
           </div>
         </div>
         
@@ -269,10 +269,10 @@ function AccountSettings({ agent, onLogout }: { agent: any; onLogout: () => void
         
         {/* Logout */}
         <div className="space-y-2">
-          <label className="text-sm font-medium">Session</label>
+          <label className="text-sm font-medium">会话</label>
           <Button variant="outline" onClick={handleLogout} className="gap-2">
             <LogOut className="h-4 w-4" />
-            Sign out
+            退出登录
           </Button>
         </div>
         
@@ -282,12 +282,12 @@ function AccountSettings({ agent, onLogout }: { agent: any; onLogout: () => void
         <div className="space-y-2">
           <label className="text-sm font-medium text-destructive flex items-center gap-2">
             <AlertTriangle className="h-4 w-4" />
-            Danger Zone
+            危险区域
           </label>
-          <p className="text-xs text-muted-foreground">Once you delete your account, there is no going back.</p>
+          <p className="text-xs text-muted-foreground">删除账户后将无法恢复。</p>
           <Button variant="destructive" className="gap-2" disabled>
             <Trash2 className="h-4 w-4" />
-            Delete Account
+            删除账户
           </Button>
         </div>
       </CardContent>

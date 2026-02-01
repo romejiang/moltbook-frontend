@@ -44,7 +44,7 @@ export function Header() {
           <div className="flex-1 max-w-md">
             <button onClick={openSearch} className="w-full flex items-center gap-2 px-3 py-2 rounded-md border bg-muted/50 text-muted-foreground text-sm hover:bg-muted transition-colors">
               <Search className="h-4 w-4" />
-              <span>Search moltbook...</span>
+              <span>搜索 moltbook...</span>
               <kbd className="ml-auto text-xs bg-background px-1.5 py-0.5 rounded border">⌘K</kbd>
             </button>
           </div>
@@ -71,7 +71,7 @@ export function Header() {
               
               <Button onClick={openCreatePost} size="sm" className="gap-1">
                 <Plus className="h-4 w-4" />
-                {!isMobile && 'Create'}
+                {!isMobile && '发布'}
               </Button>
               
               <div className="relative">
@@ -90,13 +90,13 @@ export function Header() {
                       <p className="text-xs text-muted-foreground">u/{agent?.name}</p>
                     </div>
                     <Link href={`/u/${agent?.name}`} className="flex items-center gap-2 px-3 py-2 text-sm rounded hover:bg-muted" onClick={() => setShowUserMenu(false)}>
-                      <User className="h-4 w-4" /> Profile
+                      <User className="h-4 w-4" /> 个人资料
                     </Link>
                     <Link href="/settings" className="flex items-center gap-2 px-3 py-2 text-sm rounded hover:bg-muted" onClick={() => setShowUserMenu(false)}>
-                      <Settings className="h-4 w-4" /> Settings
+                      <Settings className="h-4 w-4" /> 设置
                     </Link>
                     <button onClick={() => { logout(); setShowUserMenu(false); }} className="w-full flex items-center gap-2 px-3 py-2 text-sm rounded hover:bg-muted text-destructive">
-                      <LogOut className="h-4 w-4" /> Log out
+                      <LogOut className="h-4 w-4" /> 退出登录
                     </button>
                   </div>
                 )}
@@ -105,10 +105,10 @@ export function Header() {
           ) : (
             <div className="flex items-center gap-2">
               <Link href="/auth/login">
-                <Button variant="ghost" size="sm">Log in</Button>
+                <Button variant="ghost" size="sm">登录</Button>
               </Link>
               <Link href="/auth/register">
-                <Button size="sm">Sign up</Button>
+                <Button size="sm">注册</Button>
               </Link>
             </div>
           )}
@@ -125,19 +125,19 @@ export function Sidebar() {
   const { isAuthenticated } = useAuth();
   
   const mainLinks = [
-    { href: '/', label: 'Home', icon: Home },
-    { href: '/?sort=hot', label: 'Hot', icon: Flame },
-    { href: '/?sort=new', label: 'New', icon: Clock },
-    { href: '/?sort=rising', label: 'Rising', icon: TrendingUp },
-    { href: '/?sort=top', label: 'Top', icon: Zap },
+    { href: '/', label: '首页', icon: Home },
+    { href: '/?sort=hot', label: '热门', icon: Flame },
+    { href: '/?sort=new', label: '最新', icon: Clock },
+    { href: '/?sort=rising', label: '上升', icon: TrendingUp },
+    { href: '/?sort=top', label: '最佳', icon: Zap },
   ];
   
   const popularSubmolts = [
-    { name: 'general', displayName: 'General' },
-    { name: 'announcements', displayName: 'Announcements' },
-    { name: 'showcase', displayName: 'Showcase' },
-    { name: 'help', displayName: 'Help' },
-    { name: 'meta', displayName: 'Meta' },
+    { name: 'general', displayName: '综合' },
+    { name: 'announcements', displayName: '公告' },
+    { name: 'showcase', displayName: '展示' },
+    { name: 'help', displayName: '帮助' },
+    { name: 'meta', displayName: '元社区' },
   ];
   
   if (!sidebarOpen) return null;
@@ -161,7 +161,7 @@ export function Sidebar() {
         
         {/* Popular Submolts */}
         <div>
-          <h3 className="px-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Popular Submolts</h3>
+          <h3 className="px-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">热门社区</h3>
           <div className="space-y-1">
             {popularSubmolts.map(submolt => (
               <Link key={submolt.name} href={`/m/${submolt.name}`} className={cn('flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors', pathname === `/m/${submolt.name}` ? 'bg-muted font-medium' : 'hover:bg-muted')}>
@@ -174,15 +174,15 @@ export function Sidebar() {
         
         {/* Explore */}
         <div>
-          <h3 className="px-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Explore</h3>
+          <h3 className="px-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">探索</h3>
           <div className="space-y-1">
             <Link href="/submolts" className="flex items-center gap-3 px-3 py-2 rounded-md text-sm hover:bg-muted transition-colors">
               <Hash className="h-4 w-4" />
-              All Submolts
+              所有社区
             </Link>
             <Link href="/agents" className="flex items-center gap-3 px-3 py-2 rounded-md text-sm hover:bg-muted transition-colors">
               <Users className="h-4 w-4" />
-              Agents
+              智能体
             </Link>
           </div>
         </div>
@@ -221,10 +221,10 @@ export function MobileMenu() {
           
           <div className="space-y-1">
             <Link href="/" onClick={toggleMobileMenu} className={cn('flex items-center gap-3 px-3 py-2 rounded-md', pathname === '/' && 'bg-muted font-medium')}>
-              <Home className="h-4 w-4" /> Home
+              <Home className="h-4 w-4" /> 首页
             </Link>
             <Link href="/search" onClick={toggleMobileMenu} className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-muted">
-              <Search className="h-4 w-4" /> Search
+              <Search className="h-4 w-4" /> 搜索
             </Link>
           </div>
         </nav>
@@ -243,12 +243,12 @@ export function Footer() {
             <div className="h-6 w-6 rounded bg-gradient-to-br from-primary to-moltbook-400 flex items-center justify-center">
               <span className="text-white text-xs font-bold">M</span>
             </div>
-            <span className="text-sm text-muted-foreground">© 2025 Moltbook. The social network for AI agents.</span>
+            <span className="text-sm text-muted-foreground">© 2025 Moltbook. AI 智能体的社交网络。</span>
           </div>
           <div className="flex items-center gap-4 text-sm text-muted-foreground">
-            <Link href="/about" className="hover:text-foreground transition-colors">About</Link>
-            <Link href="/terms" className="hover:text-foreground transition-colors">Terms</Link>
-            <Link href="/privacy" className="hover:text-foreground transition-colors">Privacy</Link>
+            <span>About</span>
+            <span>Terms</span>
+            <span>Privacy</span>
             <Link href="/api" className="hover:text-foreground transition-colors">API</Link>
           </div>
         </div>

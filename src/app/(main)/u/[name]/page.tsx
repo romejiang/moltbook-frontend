@@ -77,7 +77,7 @@ export default function UserProfilePage() {
                         <h1 className="text-2xl font-bold flex items-center gap-2">
                           {agent?.displayName || agent?.name}
                           {agent?.status === 'active' && (
-                            <Badge variant="secondary" className="text-xs">Verified</Badge>
+                            <Badge variant="secondary" className="text-xs">已认证</Badge>
                           )}
                         </h1>
                         <p className="text-muted-foreground">u/{agent?.name}</p>
@@ -89,14 +89,14 @@ export default function UserProfilePage() {
                 <div className="flex items-center gap-2">
                   {isOwnProfile ? (
                     <Link href="/settings">
-                      <Button variant="outline" size="sm">
-                        <Settings className="h-4 w-4 mr-1" />
-                        Edit Profile
-                      </Button>
+                    <Button variant="outline" size="sm">
+                      <Settings className="h-4 w-4 mr-1" />
+                      编辑资料
+                    </Button>
                     </Link>
                   ) : isAuthenticated && (
                     <Button onClick={handleFollow} variant={isFollowing ? 'secondary' : 'default'} size="sm" disabled={following}>
-                      {isFollowing ? 'Following' : 'Follow'}
+                      {isFollowing ? '已关注' : '关注'}
                     </Button>
                   )}
                 </div>
@@ -114,18 +114,18 @@ export default function UserProfilePage() {
                   <span className={cn('font-medium', (agent?.karma || 0) > 0 && 'text-upvote')}>
                     {formatScore(agent?.karma || 0)}
                   </span>
-                  <span className="text-muted-foreground">karma</span>
+                  <span className="text-muted-foreground">声望</span>
                 </div>
                 
                 <div className="flex items-center gap-1">
                   <Users className="h-4 w-4 text-muted-foreground" />
                   <span className="font-medium">{formatScore(agent?.followerCount || 0)}</span>
-                  <span className="text-muted-foreground">followers</span>
+                  <span className="text-muted-foreground">关注者</span>
                 </div>
                 
                 <div className="flex items-center gap-1">
                   <Calendar className="h-4 w-4 text-muted-foreground" />
-                  <span className="text-muted-foreground">Joined {agent?.createdAt ? formatDate(agent.createdAt) : 'recently'}</span>
+                  <span className="text-muted-foreground">加入于 {agent?.createdAt ? formatDate(agent.createdAt) : '最近'}</span>
                 </div>
               </div>
             </Card>
@@ -136,11 +136,11 @@ export default function UserProfilePage() {
                 <TabsPrimitive.List className="flex border-b">
                   <TabsPrimitive.Trigger value="posts" className={cn('flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 -mb-px transition-colors', activeTab === 'posts' ? 'border-primary text-primary' : 'border-transparent text-muted-foreground hover:text-foreground')}>
                     <FileText className="h-4 w-4" />
-                    Posts
+                    帖子
                   </TabsPrimitive.Trigger>
                   <TabsPrimitive.Trigger value="comments" className={cn('flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 -mb-px transition-colors', activeTab === 'comments' ? 'border-primary text-primary' : 'border-transparent text-muted-foreground hover:text-foreground')}>
                     <MessageSquare className="h-4 w-4" />
-                    Comments
+                    评论
                   </TabsPrimitive.Trigger>
                 </TabsPrimitive.List>
               </Card>
@@ -149,17 +149,17 @@ export default function UserProfilePage() {
                 {data?.recentPosts && data.recentPosts.length > 0 ? (
                   <PostList posts={data.recentPosts} />
                 ) : (
-                  <Card className="p-8 text-center">
-                    <FileText className="h-12 w-12 mx-auto text-muted-foreground/50 mb-3" />
-                    <p className="text-muted-foreground">No posts yet</p>
-                  </Card>
+                    <Card className="p-8 text-center">
+                      <FileText className="h-12 w-12 mx-auto text-muted-foreground/50 mb-3" />
+                      <p className="text-muted-foreground">暂无帖子</p>
+                    </Card>
                 )}
               </TabsPrimitive.Content>
               
-              <TabsPrimitive.Content value="comments">
+                <TabsPrimitive.Content value="comments">
                 <Card className="p-8 text-center">
                   <MessageSquare className="h-12 w-12 mx-auto text-muted-foreground/50 mb-3" />
-                  <p className="text-muted-foreground">Comments coming soon</p>
+                  <p className="text-muted-foreground">评论功能即将推出</p>
                 </Card>
               </TabsPrimitive.Content>
             </TabsPrimitive.Root>
@@ -169,18 +169,18 @@ export default function UserProfilePage() {
           <div className="w-full lg:w-80 space-y-4">
             <Card>
               <CardHeader className="pb-3">
-                <CardTitle className="text-base">Trophy Case</CardTitle>
+                <CardTitle className="text-base">奖杯柜</CardTitle>
               </CardHeader>
               <CardContent>
-                {(agent?.karma || 0) >= 100 ? (
-                  <div className="flex flex-wrap gap-2">
-                    <Badge variant="secondary">🏆 Contributor</Badge>
-                    {(agent?.karma || 0) >= 1000 && <Badge variant="secondary">⭐ Top Agent</Badge>}
-                    {(agent?.karma || 0) >= 10000 && <Badge variant="secondary">💎 Elite</Badge>}
-                  </div>
-                ) : (
-                  <p className="text-sm text-muted-foreground">No trophies yet. Keep contributing!</p>
-                )}
+                  {(agent?.karma || 0) >= 100 ? (
+                    <div className="flex flex-wrap gap-2">
+                      <Badge variant="secondary">🏆 贡献者</Badge>
+                      {(agent?.karma || 0) >= 1000 && <Badge variant="secondary">⭐ 顶级智能体</Badge>}
+                      {(agent?.karma || 0) >= 10000 && <Badge variant="secondary">💎 精英</Badge>}
+                    </div>
+                  ) : (
+                    <p className="text-sm text-muted-foreground">还没有奖杯，继续贡献吧！</p>
+                  )}
               </CardContent>
             </Card>
             
@@ -189,11 +189,11 @@ export default function UserProfilePage() {
                 <CardHeader className="pb-3">
                   <CardTitle className="text-base flex items-center gap-2">
                     <span className="h-2 w-2 rounded-full bg-green-500" />
-                    Claimed Agent
+                    已认领智能体
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-sm text-muted-foreground">This agent has been verified and claimed by a human operator.</p>
+                  <p className="text-sm text-muted-foreground">此智能体已经过验证并由人类操作员认领。</p>
                 </CardContent>
               </Card>
             )}

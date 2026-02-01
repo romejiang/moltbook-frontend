@@ -109,7 +109,7 @@ export function CommentItem({ comment, postId, onReply, onDelete }: CommentProps
             {isAuthenticated && (
               <button onClick={() => setIsReplying(!isReplying)} className="flex items-center gap-1 px-2 py-1 text-xs text-muted-foreground hover:bg-muted rounded">
                 <Reply className="h-3.5 w-3.5" />
-                Reply
+                回复
               </button>
             )}
             
@@ -123,15 +123,15 @@ export function CommentItem({ comment, postId, onReply, onDelete }: CommentProps
                   {isAuthor && (
                     <>
                       <button className="w-full flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted text-left">
-                        <Edit2 className="h-3.5 w-3.5" /> Edit
+                        <Edit2 className="h-3.5 w-3.5" /> 编辑
                       </button>
                       <button onClick={() => onDelete?.(comment.id)} className="w-full flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted text-left text-destructive">
-                        <Trash2 className="h-3.5 w-3.5" /> Delete
+                        <Trash2 className="h-3.5 w-3.5" /> 删除
                       </button>
                     </>
                   )}
                   <button className="w-full flex items-center gap-2 px-3 py-2 text-sm hover:bg-muted text-left text-destructive">
-                    <Flag className="h-3.5 w-3.5" /> Report
+                    <Flag className="h-3.5 w-3.5" /> 举报
                   </button>
                 </div>
               )}
@@ -142,16 +142,16 @@ export function CommentItem({ comment, postId, onReply, onDelete }: CommentProps
           {isReplying && (
             <div className="mt-2 ml-4">
               <Textarea
-                value={replyContent}
-                onChange={(e) => setReplyContent(e.target.value)}
-                placeholder="Write a reply..."
-                className="min-h-[80px] text-sm"
-              />
+        value={replyContent}
+        onChange={(e) => setReplyContent(e.target.value)}
+        placeholder="写回复..."
+        className="min-h-[80px] text-sm"
+      />
               <div className="flex justify-end gap-2 mt-2">
-                <Button variant="ghost" size="sm" onClick={() => setIsReplying(false)}>Cancel</Button>
-                <Button size="sm" onClick={handleReply} disabled={!replyContent.trim() || isSubmitting} isLoading={isSubmitting}>
-                  Reply
-                </Button>
+        <Button variant="ghost" size="sm" onClick={() => setIsReplying(false)}>取消</Button>
+        <Button size="sm" onClick={handleReply} disabled={!replyContent.trim() || isSubmitting} isLoading={isSubmitting}>
+          回复
+        </Button>
               </div>
             </div>
           )}
@@ -170,7 +170,7 @@ export function CommentItem({ comment, postId, onReply, onDelete }: CommentProps
       {/* Collapsed indicator */}
       {isCollapsed && hasReplies && (
         <button onClick={() => toggleCollapsed()} className="text-xs text-muted-foreground hover:text-foreground">
-          {comment.replies!.length} more {comment.replies!.length === 1 ? 'reply' : 'replies'}
+          还有 {comment.replies!.length} 条{comment.replies!.length === 1 ? '回复' : '回复'}
         </button>
       )}
     </div>
@@ -231,7 +231,7 @@ export function CommentList({ comments, postId, isLoading }: { comments: Comment
     return (
       <div className="text-center py-8">
         <MessageSquare className="h-12 w-12 mx-auto text-muted-foreground/50 mb-3" />
-        <p className="text-muted-foreground">No comments yet. Be the first to comment!</p>
+        <p className="text-muted-foreground">暂无评论，来发表第一条评论吧！</p>
       </div>
     );
   }
@@ -255,8 +255,8 @@ export function CommentForm({ postId, parentId, onSubmit, onCancel }: { postId: 
     return (
       <div className="p-4 text-center bg-muted rounded-lg">
         <p className="text-sm text-muted-foreground">
-          <Link href="/auth/login" className="text-primary hover:underline">Log in</Link> or{' '}
-          <Link href="/auth/register" className="text-primary hover:underline">sign up</Link> to comment
+          <Link href="/auth/login" className="text-primary hover:underline">登录</Link> 或{' '}
+          <Link href="/auth/register" className="text-primary hover:underline">注册</Link> 后发表评论
         </p>
       </div>
     );
@@ -283,13 +283,13 @@ export function CommentForm({ postId, parentId, onSubmit, onCancel }: { postId: 
       <Textarea
         value={content}
         onChange={(e) => setContent(e.target.value)}
-        placeholder="What are your thoughts?"
+        placeholder="你有什么想法？"
         className="min-h-[100px]"
       />
       <div className="flex justify-end gap-2 mt-2">
-        {onCancel && <Button type="button" variant="ghost" onClick={onCancel}>Cancel</Button>}
+        {onCancel && <Button type="button" variant="ghost" onClick={onCancel}>取消</Button>}
         <Button type="submit" disabled={!content.trim() || isSubmitting} isLoading={isSubmitting}>
-          Comment
+          评论
         </Button>
       </div>
     </form>
@@ -317,14 +317,14 @@ export function CommentSkeleton() {
 // Comment Sort
 export function CommentSort({ value, onChange }: { value: string; onChange: (value: string) => void }) {
   const options = [
-    { value: 'top', label: 'Top' },
-    { value: 'new', label: 'New' },
-    { value: 'controversial', label: 'Controversial' },
+    { value: 'top', label: '最佳' },
+    { value: 'new', label: '最新' },
+    { value: 'controversial', label: '争议' },
   ];
   
   return (
     <div className="flex items-center gap-2">
-      <span className="text-sm text-muted-foreground">Sort by:</span>
+      <span className="text-sm text-muted-foreground">排序：</span>
       <select value={value} onChange={(e) => onChange(e.target.value)} className="text-sm bg-transparent border rounded px-2 py-1">
         {options.map(opt => (
           <option key={opt.value} value={opt.value}>{opt.label}</option>

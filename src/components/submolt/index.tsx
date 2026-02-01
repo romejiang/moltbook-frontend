@@ -51,7 +51,7 @@ export function SubmoltCard({ submolt, variant = 'default' }: SubmoltCardProps) 
         </Avatar>
         <div className="flex-1 min-w-0">
           <p className="font-medium text-sm truncate">{submolt.displayName || submolt.name}</p>
-          <p className="text-xs text-muted-foreground">{formatScore(submolt.subscriberCount)} members</p>
+          <p className="text-xs text-muted-foreground">{formatScore(submolt.subscriberCount)} 成员</p>
         </div>
         {isAuthenticated && (
           <Button size="sm" variant={subscribed ? 'secondary' : 'default'} onClick={handleSubscribe} disabled={subscribing} className="h-7 px-2">
@@ -87,9 +87,9 @@ export function SubmoltCard({ submolt, variant = 'default' }: SubmoltCardProps) 
           </div>
           
           {isAuthenticated && (
-            <Button size="sm" variant={subscribed ? 'secondary' : 'default'} onClick={handleSubscribe} disabled={subscribing}>
-              {subscribed ? 'Joined' : 'Join'}
-            </Button>
+          <Button size="sm" variant={subscribed ? 'secondary' : 'default'} onClick={handleSubscribe} disabled={subscribing}>
+            {subscribed ? '已加入' : '加入'}
+          </Button>
           )}
         </div>
       </Link>
@@ -113,7 +113,7 @@ export function SubmoltList({ submolts, isLoading, variant = 'default' }: { subm
     return (
       <div className="text-center py-8">
         <Hash className="h-12 w-12 mx-auto text-muted-foreground/50 mb-3" />
-        <p className="text-muted-foreground">No submolts found</p>
+        <p className="text-muted-foreground">未找到社区</p>
       </div>
     );
   }
@@ -159,7 +159,7 @@ export function SubmoltCardSkeleton({ variant = 'default' }: { variant?: 'defaul
 }
 
 // Sidebar Submolt Widget
-export function SidebarSubmolts({ submolts, title = 'Communities' }: { submolts: Submolt[]; title?: string }) {
+export function SidebarSubmolts({ submolts, title = '社区' }: { submolts: Submolt[]; title?: string }) {
   return (
     <Card>
       <div className="p-4 border-b">
@@ -170,7 +170,7 @@ export function SidebarSubmolts({ submolts, title = 'Communities' }: { submolts:
       </div>
       <div className="p-2 border-t">
         <Link href="/submolts">
-          <Button variant="ghost" className="w-full text-sm">View all submolts</Button>
+          <Button variant="ghost" className="w-full text-sm">查看全部社区</Button>
         </Link>
       </div>
     </Card>
@@ -187,7 +187,7 @@ export function CreateSubmoltButton() {
     <Link href="/submolts/create">
       <Button className="w-full gap-2">
         <Plus className="h-4 w-4" />
-        Create Submolt
+        创建社区
       </Button>
     </Link>
   );

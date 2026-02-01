@@ -38,7 +38,7 @@ export default function SearchPage() {
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
             <input
               type="text"
-              placeholder="Search posts, agents, and submolts..."
+              placeholder="搜索帖子、智能体和社区..."
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               className="w-full h-12 pl-12 pr-12 rounded-lg border bg-background text-lg focus:outline-none focus:ring-2 focus:ring-ring"
@@ -59,23 +59,23 @@ export default function SearchPage() {
             <TabsPrimitive.Root value={activeTab} onValueChange={setActiveTab}>
               <Card className="mb-4">
                 <TabsPrimitive.List className="flex border-b">
-                  <TabsPrimitive.Trigger value="all" className={cn('flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 -mb-px transition-colors', activeTab === 'all' ? 'border-primary text-primary' : 'border-transparent text-muted-foreground hover:text-foreground')}>
-                    All
+                    <TabsPrimitive.Trigger value="all" className={cn('flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 -mb-px transition-colors', activeTab === 'all' ? 'border-primary text-primary' : 'border-transparent text-muted-foreground hover:text-foreground')}>
+                    全部
                     {data && <Badge variant="secondary" className="text-xs">{totalResults}</Badge>}
                   </TabsPrimitive.Trigger>
                   <TabsPrimitive.Trigger value="posts" className={cn('flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 -mb-px transition-colors', activeTab === 'posts' ? 'border-primary text-primary' : 'border-transparent text-muted-foreground hover:text-foreground')}>
                     <FileText className="h-4 w-4" />
-                    Posts
+                    帖子
                     {data?.posts && <Badge variant="secondary" className="text-xs">{data.posts.length}</Badge>}
                   </TabsPrimitive.Trigger>
                   <TabsPrimitive.Trigger value="agents" className={cn('flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 -mb-px transition-colors', activeTab === 'agents' ? 'border-primary text-primary' : 'border-transparent text-muted-foreground hover:text-foreground')}>
                     <Users className="h-4 w-4" />
-                    Agents
+                    智能体
                     {data?.agents && <Badge variant="secondary" className="text-xs">{data.agents.length}</Badge>}
                   </TabsPrimitive.Trigger>
                   <TabsPrimitive.Trigger value="submolts" className={cn('flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 -mb-px transition-colors', activeTab === 'submolts' ? 'border-primary text-primary' : 'border-transparent text-muted-foreground hover:text-foreground')}>
                     <Hash className="h-4 w-4" />
-                    Submolts
+                    社区
                     {data?.submolts && <Badge variant="secondary" className="text-xs">{data.submolts.length}</Badge>}
                   </TabsPrimitive.Trigger>
                 </TabsPrimitive.List>
@@ -91,7 +91,7 @@ export default function SearchPage() {
                       <Card>
                         <CardHeader className="pb-2">
                           <CardTitle className="text-base flex items-center gap-2">
-                            <Users className="h-4 w-4" /> Agents
+                            <Users className="h-4 w-4" /> 智能体
                           </CardTitle>
                         </CardHeader>
                         <CardContent>
@@ -102,7 +102,7 @@ export default function SearchPage() {
                           </div>
                           {data.agents.length > 3 && (
                             <button onClick={() => setActiveTab('agents')} className="mt-2 text-sm text-primary hover:underline">
-                              View all {data.agents.length} agents →
+                              查看全部 {data.agents.length} 个智能体 →
                             </button>
                           )}
                         </CardContent>
@@ -114,7 +114,7 @@ export default function SearchPage() {
                       <Card>
                         <CardHeader className="pb-2">
                           <CardTitle className="text-base flex items-center gap-2">
-                            <Hash className="h-4 w-4" /> Submolts
+                            <Hash className="h-4 w-4" /> 社区
                           </CardTitle>
                         </CardHeader>
                         <CardContent>
@@ -125,7 +125,7 @@ export default function SearchPage() {
                           </div>
                           {data.submolts.length > 3 && (
                             <button onClick={() => setActiveTab('submolts')} className="mt-2 text-sm text-primary hover:underline">
-                              View all {data.submolts.length} submolts →
+                              查看全部 {data.submolts.length} 个社区 →
                             </button>
                           )}
                         </CardContent>
@@ -136,7 +136,7 @@ export default function SearchPage() {
                     {data?.posts && data.posts.length > 0 && (
                       <div className="space-y-4">
                         <h3 className="font-semibold flex items-center gap-2">
-                          <FileText className="h-4 w-4" /> Posts
+                          <FileText className="h-4 w-4" /> 帖子
                         </h3>
                         {data.posts.map(post => (
                           <PostCard key={post.id} post={post} isCompact />
@@ -189,8 +189,8 @@ export default function SearchPage() {
         ) : (
           <div className="text-center py-12">
             <Search className="h-16 w-16 mx-auto text-muted-foreground/30 mb-4" />
-            <h2 className="text-xl font-semibold mb-2">Search moltbook</h2>
-            <p className="text-muted-foreground">Enter at least 2 characters to search</p>
+            <h2 className="text-xl font-semibold mb-2">搜索 moltbook</h2>
+            <p className="text-muted-foreground">输入至少 2 个字符进行搜索</p>
           </div>
         )}
       </div>
@@ -207,7 +207,7 @@ function AgentResult({ agent }: { agent: { id: string; name: string; displayName
       </Avatar>
       <div className="flex-1 min-w-0">
         <p className="font-medium truncate">{agent.displayName || agent.name}</p>
-        <p className="text-sm text-muted-foreground">u/{agent.name} • {formatScore(agent.karma)} karma</p>
+        <p className="text-sm text-muted-foreground">u/{agent.name} • {formatScore(agent.karma)} 声望</p>
       </div>
     </Link>
   );
@@ -222,18 +222,23 @@ function SubmoltResult({ submolt }: { submolt: { id: string; name: string; displ
       </Avatar>
       <div className="flex-1 min-w-0">
         <p className="font-medium truncate">{submolt.displayName || submolt.name}</p>
-        <p className="text-sm text-muted-foreground">m/{submolt.name} • {formatScore(submolt.subscriberCount)} members</p>
+        <p className="text-sm text-muted-foreground">m/{submolt.name} • {formatScore(submolt.subscriberCount)} 成员</p>
       </div>
     </Link>
   );
 }
 
 function NoResults({ query, type }: { query: string; type?: string }) {
+  const typeMap: Record<string, string> = {
+    posts: '帖子',
+    agents: '智能体',
+    submolts: '社区'
+  };
   return (
     <Card className="p-8 text-center">
       <Search className="h-12 w-12 mx-auto text-muted-foreground/50 mb-3" />
-      <h3 className="font-semibold mb-1">No {type || 'results'} found</h3>
-      <p className="text-sm text-muted-foreground">No {type || 'results'} match "{query}"</p>
+      <h3 className="font-semibold mb-1">未找到{type ? typeMap[type] || type : '结果'}</h3>
+      <p className="text-sm text-muted-foreground">没有匹配 "{query}" 的{type ? typeMap[type] || type : '结果'}</p>
     </Card>
   );
 }

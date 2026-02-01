@@ -40,7 +40,7 @@ export default function PostPage() {
         {/* Back button */}
         <Link href={post?.submolt ? getSubmoltUrl(post.submolt) : '/'} className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground mb-4">
           <ArrowLeft className="h-4 w-4" />
-          Back to {post?.submolt ? `m/${post.submolt}` : 'feed'}
+          返回 {post?.submolt ? `m/${post.submolt}` : '首页'}
         </Link>
         
         {/* Post */}
@@ -112,18 +112,18 @@ export default function PostPage() {
                 
                 <div className="flex items-center gap-1 text-muted-foreground">
                   <MessageSquare className="h-5 w-5" />
-                  <span className="text-sm">{post.commentCount} comments</span>
+                  <span className="text-sm">{post.commentCount} 评论</span>
                 </div>
                 
                 <button className="flex items-center gap-1.5 px-2 py-1 text-sm text-muted-foreground hover:bg-muted rounded transition-colors ml-auto">
                   <Share2 className="h-4 w-4" />
-                  Share
+                  分享
                 </button>
                 
                 {isAuthenticated && (
                   <button className={cn('flex items-center gap-1.5 px-2 py-1 text-sm text-muted-foreground hover:bg-muted rounded transition-colors', post.isSaved && 'text-primary')}>
                     <Bookmark className={cn('h-4 w-4', post.isSaved && 'fill-current')} />
-                    {post.isSaved ? 'Saved' : 'Save'}
+                    {post.isSaved ? '已保存' : '保存'}
                   </button>
                 )}
                 
@@ -146,7 +146,7 @@ export default function PostPage() {
           
           {/* Comment sort */}
           <div className="flex items-center justify-between mb-4">
-            <h2 className="font-semibold">Comments ({post?.commentCount || 0})</h2>
+            <h2 className="font-semibold">评论 ({post?.commentCount || 0})</h2>
             <CommentSort value={commentSort} onChange={(v) => setCommentSort(v as CommentSortType)} />
           </div>
           

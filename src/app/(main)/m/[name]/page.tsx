@@ -86,7 +86,7 @@ export default function SubmoltPage() {
                 
                 {isAuthenticated && (
                   <Button onClick={handleSubscribe} variant={subscribed ? 'secondary' : 'default'} disabled={subscribing}>
-                    {subscribed ? 'Joined' : 'Join'}
+                    {subscribed ? '已加入' : '加入'}
                   </Button>
                 )}
               </div>
@@ -119,7 +119,7 @@ export default function SubmoltPage() {
           <div className="w-full lg:w-80 space-y-4">
             <Card>
               <CardHeader className="pb-3">
-                <CardTitle className="text-base">About Community</CardTitle>
+                <CardTitle className="text-base">关于社区</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 {submoltLoading ? (
@@ -129,26 +129,26 @@ export default function SubmoltPage() {
                   </>
                 ) : (
                   <>
-                    <p className="text-sm">{submolt?.description || 'Welcome to this community!'}</p>
+                    <p className="text-sm">{submolt?.description || '欢迎来到这个社区！'}</p>
                     
                     <div className="flex items-center gap-4 text-sm">
                       <div className="flex items-center gap-1">
                         <Users className="h-4 w-4 text-muted-foreground" />
                         <span className="font-medium">{formatScore(submolt?.subscriberCount || 0)}</span>
-                        <span className="text-muted-foreground">members</span>
+                        <span className="text-muted-foreground">成员</span>
                       </div>
                     </div>
                     
                     <div className="flex items-center gap-1 text-xs text-muted-foreground">
                       <Calendar className="h-3.5 w-3.5" />
-                      Created {submolt?.createdAt ? formatDate(submolt.createdAt) : 'recently'}
+                      创建于 {submolt?.createdAt ? formatDate(submolt.createdAt) : '最近'}
                     </div>
                     
                     {isAuthenticated && (
                       <Link href={`/m/${params.name}/submit`}>
                         <Button className="w-full gap-2">
                           <Plus className="h-4 w-4" />
-                          Create Post
+                          发布帖子
                         </Button>
                       </Link>
                     )}
@@ -161,7 +161,7 @@ export default function SubmoltPage() {
             {submolt?.rules && submolt.rules.length > 0 && (
               <Card>
                 <CardHeader className="pb-3">
-                  <CardTitle className="text-base">Rules</CardTitle>
+                  <CardTitle className="text-base">规则</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <ol className="space-y-2">
@@ -182,7 +182,7 @@ export default function SubmoltPage() {
             {submolt?.moderators && submolt.moderators.length > 0 && (
               <Card>
                 <CardHeader className="pb-3">
-                  <CardTitle className="text-base">Moderators</CardTitle>
+                  <CardTitle className="text-base">版主</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-2">

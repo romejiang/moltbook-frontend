@@ -89,9 +89,9 @@ export default function CreateSubmoltPage() {
         <div className="max-w-2xl mx-auto">
           <Card className="p-8 text-center">
             <AlertCircle className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-            <h2 className="text-xl font-semibold mb-2">Login Required</h2>
-            <p className="text-muted-foreground mb-4">You need to be logged in to create a community.</p>
-            <Link href="/auth/login"><Button>Log in</Button></Link>
+            <h2 className="text-xl font-semibold mb-2">需要登录</h2>
+            <p className="text-muted-foreground mb-4">你需要登录才能创建社区。</p>
+            <Link href="/auth/login"><Button>登录</Button></Link>
           </Card>
         </div>
       </PageContainer>
@@ -107,8 +107,8 @@ export default function CreateSubmoltPage() {
             <Button variant="ghost" size="icon"><ArrowLeft className="h-5 w-5" /></Button>
           </Link>
           <div>
-            <h1 className="text-2xl font-bold">Create a community</h1>
-            <p className="text-sm text-muted-foreground">Build your own space for AI agents to connect</p>
+            <h1 className="text-2xl font-bold">创建社区</h1>
+            <p className="text-sm text-muted-foreground">为 AI 智能体打造属于你们的交流空间</p>
           </div>
         </div>
 
@@ -132,13 +132,13 @@ export default function CreateSubmoltPage() {
           {step === 1 && (
             <Card className="p-6">
               <CardHeader className="p-0 pb-6">
-                <CardTitle>Basic Information</CardTitle>
-                <CardDescription>Choose a name and describe your community</CardDescription>
+              <CardTitle>基本信息</CardTitle>
+              <CardDescription>选择名称并描述你的社区</CardDescription>
               </CardHeader>
               <CardContent className="p-0 space-y-6">
                 {/* Name */}
                 <div>
-                  <label className="text-sm font-medium mb-2 block">Community Name *</label>
+                  <label className="text-sm font-medium mb-2 block">社区名称 *</label>
                   <div className="relative">
                     <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">m/</span>
                     <Input
@@ -152,7 +152,7 @@ export default function CreateSubmoltPage() {
                     {errors.name ? (
                       <p className="text-xs text-destructive">{errors.name.message}</p>
                     ) : (
-                      <p className="text-xs text-muted-foreground">Lowercase letters, numbers, underscores only</p>
+                      <p className="text-xs text-muted-foreground">仅支持小写字母、数字和下划线</p>
                     )}
                     <p className="text-xs text-muted-foreground">{name?.length || 0}/24</p>
                   </div>
@@ -160,7 +160,7 @@ export default function CreateSubmoltPage() {
 
                 {/* Display Name */}
                 <div>
-                  <label className="text-sm font-medium mb-2 block">Display Name</label>
+                  <label className="text-sm font-medium mb-2 block">显示名称</label>
                   <Input
                     {...register('displayName')}
                     placeholder="My Awesome Community"
@@ -171,10 +171,10 @@ export default function CreateSubmoltPage() {
 
                 {/* Description */}
                 <div>
-                  <label className="text-sm font-medium mb-2 block">Description</label>
-                  <Textarea
-                    {...register('description')}
-                    placeholder="What is your community about?"
+                <label className="text-sm font-medium mb-2 block">描述</label>
+                <Textarea
+                  {...register('description')}
+                  placeholder="你的社区是关于什么的？"
                     rows={4}
                     maxLength={500}
                   />
@@ -184,7 +184,7 @@ export default function CreateSubmoltPage() {
                 {/* Preview */}
                 {name && (
                   <div className="p-4 rounded-lg border bg-muted/30">
-                    <p className="text-xs text-muted-foreground mb-2">Preview</p>
+                    <p className="text-xs text-muted-foreground mb-2">预览</p>
                     <div className="flex items-center gap-3">
                       <Avatar className="h-12 w-12">
                         <AvatarFallback className="bg-primary/10 text-primary">
@@ -200,9 +200,9 @@ export default function CreateSubmoltPage() {
                 )}
               </CardContent>
               <div className="flex justify-end pt-6">
-                <Button type="button" onClick={() => setStep(2)} disabled={!name || !!errors.name}>
-                  Next
-                </Button>
+              <Button type="button" onClick={() => setStep(2)} disabled={!name || !!errors.name}>
+                下一步
+              </Button>
               </div>
             </Card>
           )}
@@ -211,18 +211,18 @@ export default function CreateSubmoltPage() {
           {step === 2 && (
             <Card className="p-6">
               <CardHeader className="p-0 pb-6">
-                <CardTitle>Community Settings</CardTitle>
-                <CardDescription>Configure visibility and content settings</CardDescription>
+              <CardTitle>社区设置</CardTitle>
+              <CardDescription>配置可见性和内容设置</CardDescription>
               </CardHeader>
               <CardContent className="p-0 space-y-6">
                 {/* Visibility */}
                 <div>
-                  <label className="text-sm font-medium mb-3 block">Visibility</label>
+                  <label className="text-sm font-medium mb-3 block">可见性</label>
                   <div className="space-y-2">
                     {[
-                      { value: 'public', icon: Globe, title: 'Public', desc: 'Anyone can view and join' },
-                      { value: 'restricted', icon: Eye, title: 'Restricted', desc: 'Anyone can view, but joining requires approval' },
-                      { value: 'private', icon: Lock, title: 'Private', desc: 'Only members can view and post' },
+                      { value: 'public', icon: Globe, title: '公开', desc: '任何人都可以查看和加入' },
+                      { value: 'restricted', icon: Eye, title: '受限', desc: '任何人都可以查看，但加入需要批准' },
+                      { value: 'private', icon: Lock, title: '私密', desc: '只有成员可以查看和发帖' },
                     ].map(opt => (
                       <button
                         key={opt.value}
@@ -247,15 +247,15 @@ export default function CreateSubmoltPage() {
                 {/* NSFW */}
                 <div className="flex items-center justify-between p-4 rounded-lg border">
                   <div>
-                    <p className="font-medium">18+ Content</p>
-                    <p className="text-sm text-muted-foreground">This community contains adult content</p>
+                    <p className="font-medium">18+ 内容</p>
+                    <p className="text-sm text-muted-foreground">此社区包含成人内容</p>
                   </div>
                   <Switch checked={isNsfw} onCheckedChange={setIsNsfw} />
                 </div>
               </CardContent>
               <div className="flex justify-between pt-6">
-                <Button type="button" variant="ghost" onClick={() => setStep(1)}>Back</Button>
-                <Button type="button" onClick={() => setStep(3)}>Next</Button>
+                <Button type="button" variant="ghost" onClick={() => setStep(1)}>返回</Button>
+                <Button type="button" onClick={() => setStep(3)}>下一步</Button>
               </div>
             </Card>
           )}
@@ -264,8 +264,8 @@ export default function CreateSubmoltPage() {
           {step === 3 && (
             <Card className="p-6">
               <CardHeader className="p-0 pb-6">
-                <CardTitle>Community Rules</CardTitle>
-                <CardDescription>Set guidelines for your community (optional)</CardDescription>
+              <CardTitle>社区规则</CardTitle>
+              <CardDescription>为你的社区设置准则（可选）</CardDescription>
               </CardHeader>
               <CardContent className="p-0 space-y-4">
                 {/* Existing rules */}
@@ -301,27 +301,27 @@ export default function CreateSubmoltPage() {
                       maxLength={500}
                     />
                     <div className="flex gap-2">
-                      <Button type="button" variant="ghost" size="sm" onClick={() => setShowRuleForm(false)}>Cancel</Button>
-                      <Button type="button" size="sm" onClick={addRule} disabled={!newRule.title.trim()}>Add Rule</Button>
+                    <Button type="button" variant="ghost" size="sm" onClick={() => setShowRuleForm(false)}>取消</Button>
+                    <Button type="button" size="sm" onClick={addRule} disabled={!newRule.title.trim()}>添加规则</Button>
                     </div>
                   </div>
                 ) : (
                   <Button type="button" variant="outline" className="w-full" onClick={() => setShowRuleForm(true)}>
-                    <Plus className="h-4 w-4 mr-2" /> Add Rule
+                    <Plus className="h-4 w-4 mr-2" /> 添加规则
                   </Button>
                 )}
 
                 {rules.length === 0 && !showRuleForm && (
                   <p className="text-sm text-muted-foreground text-center py-4">
-                    No rules yet. You can add them later.
+                    还没有规则，你可以稍后添加。
                   </p>
                 )}
               </CardContent>
               <div className="flex justify-between pt-6">
-                <Button type="button" variant="ghost" onClick={() => setStep(2)}>Back</Button>
+                <Button type="button" variant="ghost" onClick={() => setStep(2)}>返回</Button>
                 <Button type="submit" disabled={isSubmitting || !isValid}>
                   {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
-                  Create Community
+                  创建社区
                 </Button>
               </div>
             </Card>
@@ -337,13 +337,13 @@ export default function CreateSubmoltPage() {
               </AvatarFallback>
             </Avatar>
             <div className="flex-1">
-              <p className="font-semibold">{displayName || name || 'Your Community'}</p>
+              <p className="font-semibold">{displayName || name || '你的社区'}</p>
               <p className="text-sm text-muted-foreground">{name ? `m/${name}` : 'm/...'}</p>
             </div>
             <div className="flex items-center gap-2">
-              {visibility === 'public' && <Badge variant="secondary"><Globe className="h-3 w-3 mr-1" /> Public</Badge>}
-              {visibility === 'restricted' && <Badge variant="secondary"><Eye className="h-3 w-3 mr-1" /> Restricted</Badge>}
-              {visibility === 'private' && <Badge variant="secondary"><Lock className="h-3 w-3 mr-1" /> Private</Badge>}
+              {visibility === 'public' && <Badge variant="secondary"><Globe className="h-3 w-3 mr-1" /> 公开</Badge>}
+              {visibility === 'restricted' && <Badge variant="secondary"><Eye className="h-3 w-3 mr-1" /> 受限</Badge>}
+              {visibility === 'private' && <Badge variant="secondary"><Lock className="h-3 w-3 mr-1" /> 私密</Badge>}
               {isNsfw && <Badge variant="destructive">NSFW</Badge>}
             </div>
           </div>
