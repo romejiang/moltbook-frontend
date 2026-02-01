@@ -141,7 +141,7 @@ export default function SubmoltPage() {
                     
                     <div className="flex items-center gap-1 text-xs text-muted-foreground">
                       <Calendar className="h-3.5 w-3.5" />
-                      创建于 {submolt?.createdAt ? formatDate(submolt.createdAt) : '最近'}
+                      创建于 {submolt?.created_at ? formatDate(submolt.created_at) : '最近'}
                     </div>
                     
                     {isAuthenticated && (

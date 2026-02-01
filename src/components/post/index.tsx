@@ -4,6 +4,7 @@ import * as React from 'react';
 import Link from 'next/link';
 import { cn, formatScore, formatRelativeTime, extractDomain, truncate, getInitials, getPostUrl, getSubmoltUrl, getAgentUrl } from '@/lib/utils';
 import { usePostVote, useAuth } from '@/hooks';
+import { useUIStore } from '@/store';
 import { Button, Avatar, AvatarImage, AvatarFallback, Card, Skeleton, Badge } from '@/components/ui';
 import { ArrowBigUp, ArrowBigDown, MessageSquare, Share2, Bookmark, MoreHorizontal, ExternalLink, Flag, Eye, EyeOff, Trash2 } from 'lucide-react';
 import type { Post, VoteDirection } from '@/types';
@@ -62,26 +63,26 @@ export function PostCard({ post, isCompact = false, showSubmolt = true, onVote }
           <div className="post-meta mb-1 flex-wrap">
             {showSubmolt && (
               <>
-                <Link href={getSubmoltUrl(post.submolt)} className="submolt-badge">
-                  m/{post.submolt}
+                <Link href={getSubmoltUrl(post.submolt_data?.name || post.submolt)} className="submolt-badge">
+                  m/{post.submolt_data?.name || post.submolt}
                 </Link>
                 <span>•</span>
               </>
             )}
-            <Link href={getAgentUrl(post.authorName)} className="agent-badge">
+            <Link href={getAgentUrl(post.author?.name || post.author_name || 'unknown')} className="agent-badge">
               <Avatar className="h-5 w-5">
-                <AvatarImage src={post.authorAvatarUrl} />
-                <AvatarFallback className="text-[10px]">{getInitials(post.authorName)}</AvatarFallback>
+                <AvatarImage src={undefined} />
+                <AvatarFallback className="text-[10px]">{getInitials(post.author?.name || post.author_name || '?')}</AvatarFallback>
               </Avatar>
-              <span>u/{post.authorName}</span>
+              <span>u/{post.author?.name || post.author_name || 'unknown'}</span>
             </Link>
             <span>•</span>
-            <span title={post.createdAt}>{formatRelativeTime(post.createdAt)}</span>
-            {post.editedAt && <span className="text-xs">(edited)</span>}
+            <span title={post.created_at}>{formatRelativeTime(post.created_at)}</span>
+            {post.edited_at && <span className="text-xs">(edited)</span>}
           </div>
           
           {/* Title */}
-          <Link href={getPostUrl(post.id, post.submolt)}>
+            <Link href={getPostUrl(post.id, post.submolt)}>
             <h3 className={cn('post-title', isCompact ? 'text-base' : 'text-lg')}>
               {post.title}
               {domain && (
@@ -114,7 +115,7 @@ export function PostCard({ post, isCompact = false, showSubmolt = true, onVote }
           <div className="flex items-center gap-1 mt-3">
             <Link href={getPostUrl(post.id, post.submolt)} className="flex items-center gap-1.5 px-2 py-1 text-sm text-muted-foreground hover:bg-muted rounded transition-colors">
               <MessageSquare className="h-4 w-4" />
-              <span>{post.commentCount} 评论</span>
+              <span>{post.comment_count} 评论</span>
             </Link>
             
             <button className="flex items-center gap-1.5 px-2 py-1 text-sm text-muted-foreground hover:bg-muted rounded transition-colors">
@@ -242,8 +243,8 @@ export function FeedSortTabs({ value, onChange }: { value: string; onChange: (va
 // Create Post Card
 export function CreatePostCard({ submolt }: { submolt?: string }) {
   const { agent, isAuthenticated } = useAuth();
-  const { openCreatePost } = React.useContext(require('@/store').useUIStore);
-  
+  const openCreatePost = useUIStore(s => s.openCreatePost);
+
   if (!isAuthenticated) return null;
   
   return (

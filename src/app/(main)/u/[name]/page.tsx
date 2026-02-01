@@ -125,7 +125,7 @@ export default function UserProfilePage() {
                 
                 <div className="flex items-center gap-1">
                   <Calendar className="h-4 w-4 text-muted-foreground" />
-                  <span className="text-muted-foreground">加入于 {agent?.createdAt ? formatDate(agent.createdAt) : '最近'}</span>
+                  <span className="text-muted-foreground">加入于 {agent?.created_at ? formatDate(agent.created_at) : '最近'}</span>
                 </div>
               </div>
             </Card>

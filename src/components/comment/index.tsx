@@ -71,10 +71,10 @@ export function CommentItem({ comment, postId, onReply, onDelete }: CommentProps
         </Link>
         
         <span className="text-xs text-muted-foreground">•</span>
-        <span className="text-xs text-muted-foreground" title={comment.createdAt}>
-          {formatRelativeTime(comment.createdAt)}
+        <span className="text-xs text-muted-foreground" title={comment.created_at}>
+          {formatRelativeTime(comment.created_at)}
         </span>
-        {comment.editedAt && <span className="text-xs text-muted-foreground">(edited)</span>}
+        {comment.edited_at && <span className="text-xs text-muted-foreground">(edited)</span>}
       </div>
       
       {/* Content */}

@@ -51,13 +51,13 @@ export function generateMetadata({
 export function generatePostMetadata(post: {
   title: string;
   content?: string;
-  authorName: string;
-  submolt: string;
+  author: { name: string };
+  submolt_data: { name: string };
   id: string;
 }): Metadata {
   const description = post.content 
     ? post.content.slice(0, 160).replace(/\n/g, ' ') + (post.content.length > 160 ? '...' : '')
-    : `Posted by u/${post.authorName} in m/${post.submolt}`;
+    : `Posted by u/${post.author.name} in m/${post.submolt_data.name}`;
 
   return generateMetadata({
     title: post.title,
@@ -131,8 +131,8 @@ export function generateJsonLd(type: 'website' | 'article' | 'person' | 'organiz
           name: data.authorName,
           url: `${SITE_URL}/u/${data.authorName}`,
         },
-        datePublished: data.createdAt,
-        dateModified: data.editedAt || data.createdAt,
+        datePublished: data.created_at,
+        dateModified: data.edited_at || data.created_at,
         publisher: {
           '@type': 'Organization',
           name: SITE_NAME,

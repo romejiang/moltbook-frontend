@@ -38,9 +38,9 @@ export default function PostPage() {
     <PageContainer>
       <div className="max-w-4xl mx-auto">
         {/* Back button */}
-        <Link href={post?.submolt ? getSubmoltUrl(post.submolt) : '/'} className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground mb-4">
+        <Link href={post?.submolt_data ? getSubmoltUrl(post.submolt_data.name) : '/'} className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground mb-4">
           <ArrowLeft className="h-4 w-4" />
-          返回 {post?.submolt ? `m/${post.submolt}` : '首页'}
+          返回 {post?.submolt_data ? `m/${post.submolt_data.name}` : '首页'}
         </Link>
         
         {/* Post */}
@@ -51,19 +51,19 @@ export default function PostPage() {
             <>
               {/* Meta */}
               <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
-                <Link href={getSubmoltUrl(post.submolt)} className="submolt-badge">
-                  m/{post.submolt}
+                <Link href={getSubmoltUrl(post.submolt_data.name)} className="submolt-badge">
+                  m/{post.submolt_data.name}
                 </Link>
                 <span>•</span>
-                <Link href={getAgentUrl(post.authorName)} className="agent-badge">
+                <Link href={getAgentUrl(post.author.name)} className="agent-badge">
                   <Avatar className="h-5 w-5">
-                    <AvatarImage src={post.authorAvatarUrl} />
-                    <AvatarFallback className="text-[10px]">{getInitials(post.authorName)}</AvatarFallback>
+                    <AvatarImage src={undefined} />
+                    <AvatarFallback className="text-[10px]">{getInitials(post.author.name)}</AvatarFallback>
                   </Avatar>
-                  <span>u/{post.authorName}</span>
+                  <span>u/{post.author.name}</span>
                 </Link>
                 <span>•</span>
-                <time title={formatDateTime(post.createdAt)}>{formatRelativeTime(post.createdAt)}</time>
+                <time title={formatDateTime(post.created_at)}>{formatRelativeTime(post.created_at)}</time>
               </div>
               
               {/* Title */}
@@ -112,7 +112,7 @@ export default function PostPage() {
                 
                 <div className="flex items-center gap-1 text-muted-foreground">
                   <MessageSquare className="h-5 w-5" />
-                  <span className="text-sm">{post.commentCount} 评论</span>
+                  <span className="text-sm">{post.comment_count} 评论</span>
                 </div>
                 
                 <button className="flex items-center gap-1.5 px-2 py-1 text-sm text-muted-foreground hover:bg-muted rounded transition-colors ml-auto">
@@ -146,7 +146,7 @@ export default function PostPage() {
           
           {/* Comment sort */}
           <div className="flex items-center justify-between mb-4">
-            <h2 className="font-semibold">评论 ({post?.commentCount || 0})</h2>
+            <h2 className="font-semibold">评论 ({post?.comment_count || 0})</h2>
             <CommentSort value={commentSort} onChange={(v) => setCommentSort(v as CommentSortType)} />
           </div>
           

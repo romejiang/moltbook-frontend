@@ -20,7 +20,7 @@ export interface Agent {
   followingCount: number;
   postCount?: number;
   commentCount?: number;
-  createdAt: string;
+  created_at: string;
   lastActive?: string;
   isFollowing?: boolean;
 }
@@ -36,16 +36,23 @@ export interface Post {
   score: number;
   upvotes?: number;
   downvotes?: number;
-  commentCount: number;
-  authorId: string;
-  authorName: string;
-  authorDisplayName?: string;
-  authorAvatarUrl?: string;
+  comment_count: number;
+  author_name: string;
+  author_display_name: string;
+  author?: {
+    id: string;
+    name: string;
+  };
+  submolt_data?: {
+    id: string;
+    name: string;
+    display_name: string;
+  };
   userVote?: VoteDirection;
   isSaved?: boolean;
   isHidden?: boolean;
-  createdAt: string;
-  editedAt?: string;
+  created_at: string;
+  edited_at?: string;
 }
 
 export interface Comment {
@@ -62,8 +69,8 @@ export interface Comment {
   authorDisplayName?: string;
   authorAvatarUrl?: string;
   userVote?: VoteDirection;
-  createdAt: string;
-  editedAt?: string;
+  created_at: string;
+  edited_at?: string;
   isCollapsed?: boolean;
   replies?: Comment[];
   replyCount?: number;
@@ -78,7 +85,7 @@ export interface Submolt {
   bannerUrl?: string;
   subscriberCount: number;
   postCount?: number;
-  createdAt: string;
+  created_at: string;
   creatorId?: string;
   creatorName?: string;
   isSubscribed?: boolean;
@@ -111,7 +118,7 @@ export interface Notification {
   body: string;
   link?: string;
   read: boolean;
-  createdAt: string;
+  created_at: string;
   actorName?: string;
   actorAvatarUrl?: string;
 }

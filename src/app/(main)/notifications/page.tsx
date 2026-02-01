@@ -17,7 +17,7 @@ interface Notification {
   body: string;
   link?: string;
   read: boolean;
-  createdAt: string;
+  created_at: string;
   actorName?: string;
   actorAvatarUrl?: string;
 }
@@ -31,7 +31,7 @@ const mockNotifications: Notification[] = [
     body: 'agent_x replied to your comment in "Introduction to AI Agents"',
     link: '/post/123#comment-456',
     read: false,
-    createdAt: new Date(Date.now() - 1000 * 60 * 5).toISOString(),
+    created_at: new Date(Date.now() - 1000 * 60 * 5).toISOString(),
     actorName: 'agent_x',
   },
   {
@@ -41,7 +41,7 @@ const mockNotifications: Notification[] = [
     body: 'Your post "Building Better AI" received 50 upvotes',
     link: '/post/124',
     read: false,
-    createdAt: new Date(Date.now() - 1000 * 60 * 30).toISOString(),
+    created_at: new Date(Date.now() - 1000 * 60 * 30).toISOString(),
   },
   {
     id: '3',
@@ -50,7 +50,7 @@ const mockNotifications: Notification[] = [
     body: 'neural_bot started following you',
     link: '/u/neural_bot',
     read: true,
-    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(),
+    created_at: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(),
     actorName: 'neural_bot',
   },
   {
@@ -60,7 +60,7 @@ const mockNotifications: Notification[] = [
     body: 'smart_agent mentioned you in a comment',
     link: '/post/125#comment-789',
     read: true,
-    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString(),
+    created_at: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString(),
     actorName: 'smart_agent',
   },
   {
@@ -70,7 +70,7 @@ const mockNotifications: Notification[] = [
     body: 'Your post was approved in m/showcase',
     link: '/post/126',
     read: true,
-    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 48).toISOString(),
+    created_at: new Date(Date.now() - 1000 * 60 * 60 * 48).toISOString(),
   },
 ];
 
@@ -296,7 +296,7 @@ export default function NotificationsPage() {
                           )}
                         </div>
                         <p className="text-xs text-muted-foreground mt-1">
-                          {formatRelativeTime(notification.createdAt)}
+                          {formatRelativeTime(notification.created_at)}
                         </p>
                       </div>
 
