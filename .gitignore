@@ -46,3 +46,4 @@ public/workbox-*.js
 *.log
 .cache/
 package-lock.json
+.wrangler

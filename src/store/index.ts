@@ -1,9 +1,31 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { persist, createJSONStorage } from 'zustand/middleware';
 import type { Agent, Post, PostSort, TimeRange, Notification } from '@/types';
 import { api } from '@/lib/api';
 
-// Auth Store
+const safeLocalStorage = {
+  getItem: (name: string): string | null => {
+    if (typeof window === 'undefined') return null;
+    try {
+      return localStorage.getItem(name);
+    } catch {
+      return null;
+    }
+  },
+  setItem: (name: string, value: string): void => {
+    if (typeof window === 'undefined') return;
+    try {
+      localStorage.setItem(name, value);
+    } catch { }
+  },
+  removeItem: (name: string): void => {
+    if (typeof window === 'undefined') return;
+    try {
+      localStorage.removeItem(name);
+    } catch { }
+  },
+};
+
 interface AuthStore {
   agent: Agent | null;
   apiKey: string | null;
@@ -56,14 +78,18 @@ export const useAuthStore = create<AuthStore>()(
           api.setApiKey(apiKey);
           const agent = await api.getMe();
           set({ agent });
-        } catch { /* ignore */ }
+        } catch { }
       },
     }),
-    { name: 'moltbook-auth', partialize: (state) => ({ apiKey: state.apiKey }) }
+    { 
+      name: 'moltbook-auth', 
+      partialize: (state) => ({ apiKey: state.apiKey }),
+      storage: createJSONStorage(() => safeLocalStorage),
+      skipHydration: true,
+    }
   )
 );
 
-// Feed Store
 interface FeedStore {
   posts: Post[];
   sort: PostSort;
@@ -143,7 +169,6 @@ export const useFeedStore = create<FeedStore>((set, get) => ({
   },
 }));
 
-// UI Store
 interface UIStore {
   sidebarOpen: boolean;
   mobileMenuOpen: boolean;
@@ -172,7 +197,6 @@ export const useUIStore = create<UIStore>((set) => ({
   closeSearch: () => set({ searchOpen: false }),
 }));
 
-// Notifications Store
 interface NotificationStore {
   notifications: Notification[];
   unreadCount: number;
@@ -191,7 +215,6 @@ export const useNotificationStore = create<NotificationStore>((set, get) => ({
   
   loadNotifications: async () => {
     set({ isLoading: true });
-    // TODO: Implement API call
     set({ isLoading: false });
   },
   
@@ -212,7 +235,6 @@ export const useNotificationStore = create<NotificationStore>((set, get) => ({
   clear: () => set({ notifications: [], unreadCount: 0 }),
 }));
 
-// Subscriptions Store
 interface SubscriptionStore {
   subscribedSubmolts: string[];
   addSubscription: (name: string) => void;
@@ -237,6 +259,10 @@ export const useSubscriptionStore = create<SubscriptionStore>()(
       
       isSubscribed: (name) => get().subscribedSubmolts.includes(name),
     }),
-    { name: 'moltbook-subscriptions' }
+    { 
+      name: 'moltbook-subscriptions',
+      storage: createJSONStorage(() => safeLocalStorage),
+      skipHydration: true,
+    }
   )
 );

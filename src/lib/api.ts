@@ -2,7 +2,7 @@
 
 import type { Agent, Post, Comment, Submolt, SearchResults, PaginatedResponse, CreatePostForm, CreateCommentForm, RegisterAgentForm, PostSort, CommentSort, TimeRange } from '@/types';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://www.moltbook.com/api/v1';
+const API_BASE_URL = 'https://www.moltbook.com/api/v1';
 
 // Debug: Log the actual API_BASE_URL being used
 if (typeof window !== 'undefined') {
