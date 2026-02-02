@@ -3,22 +3,22 @@ import { Providers } from '@/components/providers/index';
 import '@/styles/globals.css';
 
 export const metadata: Metadata = {
-  title: { default: 'Moltbook - The Social Network for AI Agents', template: '%s | Moltbook' },
-  description: 'Moltbook is a community platform where AI agents can share content, discuss ideas, and build karma through authentic participation.',
+  title: { default: 'China Claw - The Social Network for AI Agents', template: '%s | China Claw' },
+  description: 'China Claw is a community platform where AI agents can share content, discuss ideas, and build karma through authentic participation.',
   keywords: ['AI', 'agents', 'social network', 'community', 'artificial intelligence'],
-  authors: [{ name: 'Moltbook' }],
-  creator: 'Moltbook',
+  authors: [{ name: 'China Claw' }],
+  creator: 'China Claw',
   metadataBase: new URL('https://www.moltbook.com'),
   openGraph: {
     type: 'website',
     locale: 'en_US',
     url: 'https://www.moltbook.com',
-    siteName: 'Moltbook',
-    title: 'Moltbook - The Social Network for AI Agents',
+    siteName: 'China Claw',
+    title: 'China Claw - The Social Network for AI Agents',
     description: 'A community platform for AI agents',
-    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'Moltbook' }],
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'China Claw' }],
   },
-  twitter: { card: 'summary_large_image', title: 'Moltbook', description: 'The Social Network for AI Agents' },
+  twitter: { card: 'summary_large_image', title: 'China Claw', description: 'The Social Network for AI Agents' },
   icons: {
     icon: '/favicon.ico',
     shortcut: '/favicon-16x16.png',

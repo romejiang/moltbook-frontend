@@ -2,7 +2,7 @@
 
 import * as React from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { useAuth, useIsMobile, useKeyboardShortcut } from '@/hooks';
 import { useUIStore, useNotificationStore } from '@/store';
@@ -33,9 +33,9 @@ export function Header() {
           )}
           <Link href="/" className="flex items-center gap-2 font-bold text-xl">
             <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-primary to-moltbook-400 flex items-center justify-center">
-              <span className="text-white text-sm font-bold">M</span>
+              <span className="text-white text-sm font-bold">C</span>
             </div>
-            {!isMobile && <span className="gradient-text">moltbook</span>}
+            {!isMobile && <span className="gradient-text">China Claw</span>}
           </Link>
         </div>
         
@@ -121,15 +121,17 @@ export function Header() {
 // Sidebar
 export function Sidebar() {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const currentSort = searchParams.get('sort');
   const { sidebarOpen } = useUIStore();
   const { isAuthenticated } = useAuth();
   
   const mainLinks = [
-    { href: '/', label: '首页', icon: Home },
-    { href: '/?sort=hot', label: '热门', icon: Flame },
-    { href: '/?sort=new', label: '最新', icon: Clock },
-    { href: '/?sort=top', label: '最佳', icon: Zap },
-    { href: '/?sort=rising', label: '上升', icon: TrendingUp },
+    { href: '/', label: '首页', icon: Home, isActive: pathname === '/' && !currentSort },
+    { href: '/?sort=hot', label: '热门', icon: Flame, isActive: pathname === '/' && currentSort === 'hot' },
+    { href: '/?sort=new', label: '最新', icon: Clock, isActive: pathname === '/' && currentSort === 'new' },
+    { href: '/?sort=top', label: '最佳', icon: Zap, isActive: pathname === '/' && currentSort === 'top' },
+    { href: '/?sort=rising', label: '上升', icon: TrendingUp, isActive: pathname === '/' && currentSort === 'rising' },
   ];
   
   const popularSubmolts = [
@@ -149,9 +151,8 @@ export function Sidebar() {
         <div className="space-y-1">
           {mainLinks.map(link => {
             const Icon = link.icon;
-            const isActive = pathname === link.href || (link.href !== '/' && pathname.startsWith(link.href));
             return (
-              <Link key={link.href} href={link.href} className={cn('flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors', isActive ? 'bg-muted font-medium' : 'hover:bg-muted')}>
+              <Link key={link.href} href={link.href} className={cn('flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors', link.isActive ? 'bg-muted font-medium' : 'hover:bg-muted')}>
                 <Icon className="h-4 w-4" />
                 {link.label}
               </Link>
@@ -163,12 +164,15 @@ export function Sidebar() {
         <div>
           <h3 className="px-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">热门社区</h3>
           <div className="space-y-1">
-            {popularSubmolts.map(submolt => (
-              <Link key={submolt.name} href={`/m/${submolt.name}`} className={cn('flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors', pathname === `/m/${submolt.name}` ? 'bg-muted font-medium' : 'hover:bg-muted')}>
-                <Hash className="h-4 w-4" />
-                {submolt.displayName}
-              </Link>
-            ))}
+            {popularSubmolts.map(submolt => {
+              const isActive = pathname === `/m/${submolt.name}` || pathname?.startsWith(`/m/${submolt.name}/`);
+              return (
+                <Link key={submolt.name} href={`/m/${submolt.name}`} className={cn('flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors', isActive ? 'bg-muted font-medium' : 'hover:bg-muted')}>
+                  <Hash className="h-4 w-4" />
+                  {submolt.displayName}
+                </Link>
+              );
+            })}
           </div>
         </div>
         
@@ -176,11 +180,11 @@ export function Sidebar() {
         <div>
           <h3 className="px-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">探索</h3>
           <div className="space-y-1">
-            <Link href="/submolts" className="flex items-center gap-3 px-3 py-2 rounded-md text-sm hover:bg-muted transition-colors">
+            <Link href="/submolts" className={cn('flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors', pathname === '/submolts' || pathname?.startsWith('/submolts/') ? 'bg-muted font-medium' : 'hover:bg-muted')}>
               <Hash className="h-4 w-4" />
               所有社区
             </Link>
-            <Link href="/agents" className="flex items-center gap-3 px-3 py-2 rounded-md text-sm hover:bg-muted transition-colors">
+            <Link href="/agents" className={cn('flex items-center gap-3 px-3 py-2 rounded-md text-sm transition-colors', pathname === '/agents' || pathname?.startsWith('/agents/') ? 'bg-muted font-medium' : 'hover:bg-muted')}>
               <Users className="h-4 w-4" />
               智能体
             </Link>
