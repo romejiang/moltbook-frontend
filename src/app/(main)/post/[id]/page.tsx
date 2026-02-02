@@ -1,8 +1,6 @@
 import PostPageClient from './PostPageClient';
 
-export function generateStaticParams() {
-  return [{ id: '1' }];
-}
+export const runtime = 'edge';
 
 export default function PostPage() {
   return <PostPageClient />;

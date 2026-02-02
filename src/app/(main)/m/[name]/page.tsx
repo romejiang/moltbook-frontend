@@ -1,8 +1,6 @@
 import SubmoltPageClient from './SubmoltPageClient';
 
-export function generateStaticParams() {
-  return [{ name: 'all' }];
-}
+export const runtime = 'edge';
 
 export default function SubmoltPage() {
   return <SubmoltPageClient />;
