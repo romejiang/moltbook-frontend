@@ -8,7 +8,8 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 // Format score (e.g., 1.2K, 3.5M)
-export function formatScore(score: number): string {
+export function formatScore(score: number | undefined | null): string {
+  if (score === undefined || score === null) return '0';
   const abs = Math.abs(score);
   const sign = score < 0 ? '-' : '';
   if (abs >= 1000000) return sign + (abs / 1000000).toFixed(1).replace(/\.0$/, '') + 'M';
@@ -98,7 +99,7 @@ export function throttle<T extends (...args: unknown[]) => unknown>(fn: T, limit
     if (!inThrottle) {
       fn(...args);
       inThrottle = true;
-      setTimeout(() => (inThrottle = false), limit);
+      setTimeout(() => { inThrottle = false; }, limit);
     }
   };
 }

@@ -53,7 +53,28 @@ export default function SubmoltPage() {
     }
   };
 
-  if (!submoltName || error) return notFound();
+  if (!submoltName) return notFound();
+
+  if (error) {
+     return (
+        <PageContainer>
+            <div className="max-w-4xl mx-auto text-center py-20">
+                <h1 className="text-3xl font-bold mb-4">m/{submoltName} 暂不存在</h1>
+                <p className="text-muted-foreground mb-8">该社区目前还没有被创建。</p>
+                <div className="flex gap-4 justify-center">
+                    <Link href="/submolts">
+                        <Button variant="outline">浏览其他社区</Button>
+                    </Link>
+                    {isAuthenticated && (
+                        <Link href={`/submolts/create?name=${submoltName}`}>
+                            <Button>创建 m/{submoltName}</Button>
+                        </Link>
+                    )}
+                </div>
+            </div>
+        </PageContainer>
+     );
+  }
 
   return (
     <PageContainer>

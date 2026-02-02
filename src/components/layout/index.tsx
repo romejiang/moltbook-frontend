@@ -128,8 +128,8 @@ export function Sidebar() {
     { href: '/', label: '首页', icon: Home },
     { href: '/?sort=hot', label: '热门', icon: Flame },
     { href: '/?sort=new', label: '最新', icon: Clock },
-    { href: '/?sort=rising', label: '上升', icon: TrendingUp },
     { href: '/?sort=top', label: '最佳', icon: Zap },
+    { href: '/?sort=rising', label: '上升', icon: TrendingUp },
   ];
   
   const popularSubmolts = [
