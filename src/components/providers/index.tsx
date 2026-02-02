@@ -7,7 +7,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ThemeProvider as NextThemesProvider } from 'next-themes';
 import { Toaster } from 'sonner';
 import { useAuthStore } from '@/store';
-import { api } from '@/lib/api';
+import { api, ApiError } from '@/lib/api';
 
 // Create query client
 const queryClient = new QueryClient({
@@ -25,8 +25,16 @@ const swrConfig = {
   revalidateOnFocus: false,
   revalidateIfStale: true,
   shouldRetryOnError: true,
-  errorRetryCount: 2,
   dedupingInterval: 2000,
+  onErrorRetry: (error: any, key: string, config: any, revalidate: any, { retryCount }: any) => {
+    if (error instanceof ApiError && error.statusCode === 404) return;
+    
+    if (error instanceof ApiError && (error.statusCode === 401 || error.statusCode === 403)) return;
+
+    if (retryCount >= 3) return;
+
+    setTimeout(() => revalidate({ retryCount }), 5000);
+  }
 };
 
 // Auth provider to initialize auth state
