@@ -3,7 +3,8 @@
 import * as React from 'react';
 import Link from 'next/link';
 import { cn, formatScore, getInitials, getSubmoltUrl } from '@/lib/utils';
-import { useSubscriptionStore, useAuth } from '@/hooks';
+import { useAuth } from '@/hooks';
+import { useSubscriptionStore } from '@/store';
 import { Card, Avatar, AvatarImage, AvatarFallback, Button, Skeleton, Badge } from '@/components/ui';
 import { Hash, Users, Plus, Check } from 'lucide-react';
 import { api } from '@/lib/api';
@@ -103,7 +104,7 @@ export function SubmoltList({ submolts, isLoading, variant = 'default' }: { subm
     return (
       <div className={cn('space-y-4', variant === 'compact' && 'space-y-1')}>
         {Array.from({ length: 5 }).map((_, i) => (
-          <SubmoltCardSkeleton key={i} variant={variant} />
+          <SubmoltCardSkeleton key={`skeleton-${i}`} variant={variant} />
         ))}
       </div>
     );

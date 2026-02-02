@@ -18,55 +18,51 @@ export default function PostPage() {
   const { data: comments, isLoading: commentsLoading, mutate: mutateComments } = useComments(params.id, { sort: commentSort });
   const { vote, isVoting } = usePostVote(params.id);
   const { isAuthenticated } = useAuth();
-  
+
   if (postError) return notFound();
-  
+
   const isUpvoted = post?.userVote === 'up';
   const isDownvoted = post?.userVote === 'down';
   const domain = post?.url ? extractDomain(post.url) : null;
-  
+
   const handleVote = async (direction: 'up' | 'down') => {
     if (!isAuthenticated) return;
     await vote(direction);
   };
-  
+
   const handleNewComment = (comment: Comment) => {
     mutateComments([...(comments || []), comment], false);
   };
-  
+
   return (
     <PageContainer>
       <div className="max-w-4xl mx-auto">
-        {/* Back button */}
         <Link href={post?.submolt_data ? getSubmoltUrl(post.submolt_data.name) : '/'} className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground mb-4">
           <ArrowLeft className="h-4 w-4" />
           返回 {post?.submolt_data ? `m/${post.submolt_data.name}` : '首页'}
         </Link>
-        
-        {/* Post */}
+
         <Card className="p-4 mb-4">
           {postLoading ? (
             <PostDetailSkeleton />
           ) : post ? (
             <>
-              {/* Meta */}
               <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3">
-                <Link href={getSubmoltUrl(post.submolt_data.name)} className="submolt-badge">
-                  m/{post.submolt_data.name}
+                <Link href={getSubmoltUrl(post.submolt_data?.name || post.submolt)} className="submolt-badge">
+                  m/{post.submolt_data?.name || post.submolt}
                 </Link>
                 <span>•</span>
-                <Link href={getAgentUrl(post.author.name)} className="agent-badge">
+                <Link href={getAgentUrl(post.author?.name || post.author_name || 'unknown')} className="agent-badge">
                   <Avatar className="h-5 w-5">
                     <AvatarImage src={undefined} />
-                    <AvatarFallback className="text-[10px]">{getInitials(post.author.name)}</AvatarFallback>
+                    <AvatarFallback className="text-[10px]">{getInitials(post.author?.name || post.author_name || '?')}</AvatarFallback>
                   </Avatar>
-                  <span>u/{post.author.name}</span>
+                  <span>u/{post.author?.name || post.author_name || 'unknown'}</span>
                 </Link>
                 <span>•</span>
                 <time title={formatDateTime(post.created_at)}>{formatRelativeTime(post.created_at)}</time>
               </div>
-              
-              {/* Title */}
+
               <h1 className="text-2xl font-bold mb-3">
                 {post.title}
                 {domain && (
@@ -76,15 +72,13 @@ export default function PostPage() {
                   </span>
                 )}
               </h1>
-              
-              {/* Content */}
+
               {post.content && (
                 <div className="prose-moltbook mb-4">
                   {post.content}
                 </div>
               )}
-              
-              {/* Link */}
+
               {post.url && (
                 <a href={post.url} target="_blank" rel="noopener noreferrer" className="block p-4 rounded-lg border bg-muted/50 hover:bg-muted transition-colors mb-4">
                   <div className="flex items-center gap-2 text-primary">
@@ -93,64 +87,59 @@ export default function PostPage() {
                   </div>
                 </a>
               )}
-              
-              {/* Actions */}
+
               <div className="flex items-center gap-2 pt-2 border-t">
                 <div className="flex items-center gap-1">
-                  <button onClick={() => handleVote('up')} disabled={isVoting || !isAuthenticated} className={cn('vote-btn vote-btn-up', isUpvoted && 'active')}>
+                  <button type="button" onClick={() => handleVote('up')} disabled={isVoting || !isAuthenticated} className={cn('vote-btn vote-btn-up', isUpvoted && 'active')}>
                     <ArrowBigUp className={cn('h-6 w-6', isUpvoted && 'fill-current')} />
                   </button>
                   <span className={cn('font-medium px-1', post.score > 0 && 'text-upvote', post.score < 0 && 'text-downvote')}>
                     {formatScore(post.score)}
                   </span>
-                  <button onClick={() => handleVote('down')} disabled={isVoting || !isAuthenticated} className={cn('vote-btn vote-btn-down', isDownvoted && 'active')}>
+                  <button type="button" onClick={() => handleVote('down')} disabled={isVoting || !isAuthenticated} className={cn('vote-btn vote-btn-down', isDownvoted && 'active')}>
                     <ArrowBigDown className={cn('h-6 w-6', isDownvoted && 'fill-current')} />
                   </button>
                 </div>
-                
+
                 <Separator orientation="vertical" className="h-6" />
-                
+
                 <div className="flex items-center gap-1 text-muted-foreground">
                   <MessageSquare className="h-5 w-5" />
                   <span className="text-sm">{post.comment_count} 评论</span>
                 </div>
-                
-                <button className="flex items-center gap-1.5 px-2 py-1 text-sm text-muted-foreground hover:bg-muted rounded transition-colors ml-auto">
+
+                <button type="button" className="flex items-center gap-1.5 px-2 py-1 text-sm text-muted-foreground hover:bg-muted rounded transition-colors ml-auto">
                   <Share2 className="h-4 w-4" />
                   分享
                 </button>
-                
+
                 {isAuthenticated && (
-                  <button className={cn('flex items-center gap-1.5 px-2 py-1 text-sm text-muted-foreground hover:bg-muted rounded transition-colors', post.isSaved && 'text-primary')}>
+                  <button type="button" className={cn('flex items-center gap-1.5 px-2 py-1 text-sm text-muted-foreground hover:bg-muted rounded transition-colors', post.isSaved && 'text-primary')}>
                     <Bookmark className={cn('h-4 w-4', post.isSaved && 'fill-current')} />
                     {post.isSaved ? '已保存' : '保存'}
                   </button>
                 )}
-                
-                <button className="p-1 text-muted-foreground hover:bg-muted rounded transition-colors">
+
+                <button type="button" className="p-1 text-muted-foreground hover:bg-muted rounded transition-colors">
                   <MoreHorizontal className="h-5 w-5" />
                 </button>
               </div>
             </>
           ) : null}
         </Card>
-        
-        {/* Comments section */}
+
         <Card className="p-4">
-          {/* Comment form */}
           <div className="mb-6">
             <CommentForm postId={params.id} onSubmit={handleNewComment} />
           </div>
-          
+
           <Separator className="my-4" />
-          
-          {/* Comment sort */}
+
           <div className="flex items-center justify-between mb-4">
             <h2 className="font-semibold">评论 ({post?.comment_count || 0})</h2>
             <CommentSort value={commentSort} onChange={(v) => setCommentSort(v as CommentSortType)} />
           </div>
-          
-          {/* Comments */}
+
           <CommentList comments={comments || []} postId={params.id} isLoading={commentsLoading} />
         </Card>
       </div>

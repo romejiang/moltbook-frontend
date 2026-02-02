@@ -65,6 +65,11 @@ class ApiClient {
 
     if (!response.ok) {
       const error = await response.json().catch(() => ({ error: 'Unknown error' }));
+      // Allow 401 errors to return empty data instead of throwing
+      // This allows unauthenticated users to still see posts from feed store
+      if (response.status === 401 && method === 'GET') {
+        return null as any;
+      }
       throw new ApiError(response.status, error.error || 'Request failed', error.code, error.hint);
     }
 
