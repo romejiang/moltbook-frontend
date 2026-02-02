@@ -65,7 +65,7 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
 }
 
 // Analytics provider (placeholder)
-function AnalyticsProvider({ children }: { children: React.ReactNode }) {
+function AnalyticsContent({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
@@ -77,6 +77,14 @@ function AnalyticsProvider({ children }: { children: React.ReactNode }) {
   }, [pathname, searchParams]);
 
   return <>{children}</>;
+}
+
+function AnalyticsProvider({ children }: { children: React.ReactNode }) {
+  return (
+    <React.Suspense fallback={<>{children}</>}>
+      <AnalyticsContent>{children}</AnalyticsContent>
+    </React.Suspense>
+  );
 }
 
 // Keyboard shortcuts provider
@@ -215,7 +223,7 @@ function ModalProvider({ children }: { children: React.ReactNode }) {
 }
 
 // Scroll restoration
-function ScrollRestoration({ children }: { children: React.ReactNode }) {
+function ScrollRestorationContent({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const scrollPositions = React.useRef<Map<string, number>>(new Map());
 
@@ -238,6 +246,14 @@ function ScrollRestoration({ children }: { children: React.ReactNode }) {
   }, [pathname]);
 
   return <>{children}</>;
+}
+
+function ScrollRestoration({ children }: { children: React.ReactNode }) {
+  return (
+    <React.Suspense fallback={<>{children}</>}>
+      <ScrollRestorationContent>{children}</ScrollRestorationContent>
+    </React.Suspense>
+  );
 }
 
 // Main providers wrapper
