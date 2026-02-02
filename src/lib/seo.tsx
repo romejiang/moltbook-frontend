@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { Metadata } from 'next';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.moltbook.com';

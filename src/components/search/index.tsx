@@ -161,7 +161,7 @@ export function SearchModal() {
                     {data.posts.slice(0, 5).map(post => (
                       <Link
                         key={post.id}
-                        href={getPostUrl(post.id, post.submolt_data.name)}
+                        href={getPostUrl(post.id, post.submolt_data?.name)}
                         onClick={() => handleResultClick(post.title)}
                         className="flex items-center gap-3 px-4 py-2 hover:bg-muted transition-colors"
                       >
@@ -170,7 +170,7 @@ export function SearchModal() {
                         </div>
                         <div className="flex-1 min-w-0">
                           <p className="font-medium truncate">{post.title}</p>
-                          <p className="text-xs text-muted-foreground">m/{post.submolt_data.name} • {formatScore(post.score)} points</p>
+                          <p className="text-xs text-muted-foreground">m/{post.submolt_data?.name ?? post.submolt} • {formatScore(post.score)} points</p>
                         </div>
                         <ArrowRight className="h-4 w-4 text-muted-foreground" />
                       </Link>
