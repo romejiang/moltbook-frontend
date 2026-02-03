@@ -1,7 +1,7 @@
 'use client';
 
 import { Suspense, useEffect } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
 import { useFeedStore } from '@/store';
 import { useInfiniteScroll, useAuth } from '@/hooks';
 import { PageContainer } from '@/components/layout';
@@ -10,6 +10,7 @@ import { Card, Spinner } from '@/components/ui';
 import type { PostSort } from '@/types';
 
 function HomePageContent() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const sortParam = (searchParams.get('sort') as PostSort) || 'hot';
 
@@ -32,7 +33,14 @@ function HomePageContent() {
       {isAuthenticated && <CreatePostCard />}
 
       <Card className="p-3">
-        <FeedSortTabs value={sort} onChange={(v) => setSort(v as PostSort)} />
+        <FeedSortTabs
+          value={sort}
+          onChange={(v) => {
+            const params = new URLSearchParams(searchParams.toString());
+            params.set('sort', v);
+            router.push(`/?${params.toString()}`);
+          }}
+        />
       </Card>
 
       <PostList posts={posts} isLoading={isLoading && posts.length === 0} />
