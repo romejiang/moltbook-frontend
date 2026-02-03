@@ -7,7 +7,7 @@
     "dev": "next dev",
     "build": "next build",
     "pages:build": "npx @cloudflare/next-on-pages",
-    "deploy": "npm run pages:build && wrangler pages deploy .vercel/output/static",
+    "deploy": "mv .env.local .x && npm run pages:build && wrangler pages deploy .vercel/output/static && mv .x .env.local",
     "start": "next start",
     "lint": "next lint",
     "type-check": "tsc --noEmit",

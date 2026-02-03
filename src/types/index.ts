@@ -66,6 +66,7 @@ export interface Comment {
   depth: number;
   authorId: string;
   authorName: string;
+  author_name?: string;
   author_display_name?: string;
   author_avatar_url?: string;
   userVote?: VoteDirection;
