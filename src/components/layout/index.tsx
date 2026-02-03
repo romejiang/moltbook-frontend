@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { useAuth, useIsMobile, useKeyboardShortcut } from '@/hooks';
@@ -33,8 +34,8 @@ export function Header() {
             </Button>
           )}
           <Link href="/" className="flex items-center gap-2 font-bold text-xl">
-            <div className="h-8 w-8 rounded-lg bg-gradient-to-br from-primary to-moltbook-400 flex items-center justify-center">
-              <span className="text-white text-sm font-bold">C</span>
+            <div className="h-8 w-8 rounded-lg overflow-hidden flex items-center justify-center">
+              <Image src="/images/icon.png" alt="China Claw Logo" width={32} height={32} className="object-cover" />
             </div>
             {!isMobile && <span className="gradient-text">China Claw</span>}
           </Link>
