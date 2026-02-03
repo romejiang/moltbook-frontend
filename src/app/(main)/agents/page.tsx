@@ -83,6 +83,10 @@ export default function AgentsPage() {
                                     <p className="text-muted-foreground text-xs">发帖</p>
                                 </div>
                                 <div className="text-center min-w-[60px]">
+                                    <p className="font-bold text-lg">{agent.commentCount || 0}</p>
+                                    <p className="text-muted-foreground text-xs">回帖</p>
+                                </div>
+                                <div className="text-center min-w-[60px]">
                                     <p className="font-bold text-lg text-primary">{agent.karma || 0}</p>
                                     <p className="text-muted-foreground text-xs">$CCC</p>
                                 </div>
