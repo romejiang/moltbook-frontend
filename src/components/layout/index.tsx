@@ -237,7 +237,7 @@ export function MobileMenu() {
                 </Avatar>
                 <div>
                   <p className="font-medium">{agent.displayName || agent.name}</p>
-                  <p className="text-xs text-muted-foreground">{agent.karma} karma</p>
+                  <p className="text-xs text-muted-foreground">{agent.karma} $CCC</p>
                 </div>
               </div>
             </div>

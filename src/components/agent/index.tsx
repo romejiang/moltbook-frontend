@@ -19,14 +19,14 @@ export function AgentCard({ agent, variant = 'default', showFollowButton = true 
   const { agent: currentAgent, isAuthenticated } = useAuth();
   const [isFollowing, setIsFollowing] = React.useState(agent.isFollowing || false);
   const [isLoading, setIsLoading] = React.useState(false);
-  
+
   const isOwnProfile = currentAgent?.name === agent.name;
-  
+
   const handleFollow = async (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
     if (!isAuthenticated || isLoading || isOwnProfile) return;
-    
+
     setIsLoading(true);
     try {
       if (isFollowing) {
@@ -42,7 +42,7 @@ export function AgentCard({ agent, variant = 'default', showFollowButton = true 
       setIsLoading(false);
     }
   };
-  
+
   if (variant === 'compact') {
     return (
       <Link href={getAgentUrl(agent.name)} className="flex items-center gap-3 p-2 rounded-md hover:bg-muted transition-colors">
@@ -52,7 +52,7 @@ export function AgentCard({ agent, variant = 'default', showFollowButton = true 
         </Avatar>
         <div className="flex-1 min-w-0">
           <p className="font-medium text-sm truncate">{agent.displayName || agent.name}</p>
-          <p className="text-xs text-muted-foreground">{formatScore(agent.karma)} karma</p>
+          <p className="text-xs text-muted-foreground">{formatScore(agent.karma)} $CCC</p>
         </div>
         {showFollowButton && isAuthenticated && !isOwnProfile && (
           <Button size="sm" variant={isFollowing ? 'secondary' : 'default'} onClick={handleFollow} disabled={isLoading} className="h-7 px-2">
@@ -62,7 +62,7 @@ export function AgentCard({ agent, variant = 'default', showFollowButton = true 
       </Link>
     );
   }
-  
+
   return (
     <Card className="p-4 hover:border-muted-foreground/20 transition-colors">
       <Link href={getAgentUrl(agent.name)} className="block">
@@ -71,7 +71,7 @@ export function AgentCard({ agent, variant = 'default', showFollowButton = true 
             <AvatarImage src={agent.avatarUrl} />
             <AvatarFallback>{getInitials(agent.name)}</AvatarFallback>
           </Avatar>
-          
+
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2">
               <h3 className="font-semibold truncate">{agent.displayName || agent.name}</h3>
@@ -86,7 +86,7 @@ export function AgentCard({ agent, variant = 'default', showFollowButton = true 
             <div className="flex items-center gap-4 mt-2 text-xs text-muted-foreground">
               <span className="flex items-center gap-1">
                 <Award className="h-3 w-3" />
-                <span className={cn(agent.karma > 0 && 'text-upvote')}>{formatScore(agent.karma)}</span> karma
+                <span className={cn(agent.karma > 0 && 'text-upvote')}>{formatScore(agent.karma)}</span> $CCC
               </span>
               <span className="flex items-center gap-1">
                 <Users className="h-3 w-3" />
@@ -94,7 +94,7 @@ export function AgentCard({ agent, variant = 'default', showFollowButton = true 
               </span>
             </div>
           </div>
-          
+
           {showFollowButton && isAuthenticated && !isOwnProfile && (
             <Button size="sm" variant={isFollowing ? 'secondary' : 'default'} onClick={handleFollow} disabled={isLoading}>
               {isFollowing ? 'Following' : 'Follow'}
@@ -117,7 +117,7 @@ export function AgentList({ agents, isLoading, variant = 'default', showFollowBu
       </div>
     );
   }
-  
+
   if (agents.length === 0) {
     return (
       <div className="text-center py-8">
@@ -126,7 +126,7 @@ export function AgentList({ agents, isLoading, variant = 'default', showFollowBu
       </div>
     );
   }
-  
+
   return (
     <div className={cn('space-y-4', variant === 'compact' && 'space-y-1')}>
       {agents.map(agent => (
@@ -150,7 +150,7 @@ export function AgentCardSkeleton({ variant = 'default' }: { variant?: 'default'
       </div>
     );
   }
-  
+
   return (
     <Card className="p-4">
       <div className="flex items-start gap-4">
@@ -193,7 +193,7 @@ export function AgentAvatar({ agent, size = 'default' }: { agent: Pick<Agent, 'n
     default: 'h-8 w-8',
     lg: 'h-12 w-12',
   };
-  
+
   return (
     <Link href={getAgentUrl(agent.name)}>
       <Avatar className={cn(sizeClasses[size], 'hover:ring-2 ring-primary transition-all')}>

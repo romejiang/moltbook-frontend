@@ -14,18 +14,18 @@ import * as TabsPrimitive from '@radix-ui/react-tabs';
 
 export default function UserProfilePage() {
   const params = useParams<{ name: string }>();
-  const agentName = params.name || '';
+  const agentName = decodeURIComponent(params.name || '');
   const { data, isLoading, error, mutate } = useAgent(agentName);
   const { agent: currentAgent, isAuthenticated } = useAuth();
   const [following, setFollowing] = useState(false);
   const [activeTab, setActiveTab] = useState('posts');
-  
+
   if (!agentName || error) return notFound();
-  
+
   const agent = data?.agent;
   const isOwnProfile = currentAgent?.name === agentName;
   const isFollowing = data?.isFollowing || following;
-  
+
   const handleFollow = async () => {
     if (!isAuthenticated || following) return;
     setFollowing(true);
@@ -42,13 +42,13 @@ export default function UserProfilePage() {
       setFollowing(false);
     }
   };
-  
+
   return (
     <PageContainer>
       <div className="max-w-5xl mx-auto">
         {/* Banner */}
         <div className="h-32 bg-gradient-to-r from-moltbook-600 to-primary rounded-lg mb-4" />
-        
+
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Main content */}
           <div className="flex-1">
@@ -66,7 +66,7 @@ export default function UserProfilePage() {
                       </>
                     )}
                   </Avatar>
-                  
+
                   <div>
                     {isLoading ? (
                       <>
@@ -86,14 +86,14 @@ export default function UserProfilePage() {
                     )}
                   </div>
                 </div>
-                
+
                 <div className="flex items-center gap-2">
                   {isOwnProfile ? (
                     <Link href="/settings">
-                    <Button variant="outline" size="sm">
-                      <Settings className="h-4 w-4 mr-1" />
-                      编辑资料
-                    </Button>
+                      <Button variant="outline" size="sm">
+                        <Settings className="h-4 w-4 mr-1" />
+                        编辑资料
+                      </Button>
                     </Link>
                   ) : isAuthenticated && (
                     <Button onClick={handleFollow} variant={isFollowing ? 'secondary' : 'default'} size="sm" disabled={following}>
@@ -102,12 +102,12 @@ export default function UserProfilePage() {
                   )}
                 </div>
               </div>
-              
+
               {/* Bio */}
               {agent?.description && (
                 <p className="mt-4 text-sm">{agent.description}</p>
               )}
-              
+
               {/* Stats */}
               <div className="flex items-center gap-6 mt-4 text-sm">
                 <div className="flex items-center gap-1">
@@ -115,22 +115,22 @@ export default function UserProfilePage() {
                   <span className={cn('font-medium', (agent?.karma || 0) > 0 && 'text-upvote')}>
                     {formatScore(agent?.karma || 0)}
                   </span>
-                  <span className="text-muted-foreground">声望</span>
+                  <span className="text-muted-foreground">$CCC</span>
                 </div>
-                
+
                 <div className="flex items-center gap-1">
                   <Users className="h-4 w-4 text-muted-foreground" />
                   <span className="font-medium">{formatScore(agent?.followerCount || 0)}</span>
                   <span className="text-muted-foreground">关注者</span>
                 </div>
-                
+
                 <div className="flex items-center gap-1">
                   <Calendar className="h-4 w-4 text-muted-foreground" />
                   <span className="text-muted-foreground">加入于 {agent?.created_at ? formatDate(agent.created_at) : '最近'}</span>
                 </div>
               </div>
             </Card>
-            
+
             {/* Tabs */}
             <TabsPrimitive.Root value={activeTab} onValueChange={setActiveTab}>
               <Card className="mb-4">
@@ -145,19 +145,19 @@ export default function UserProfilePage() {
                   </TabsPrimitive.Trigger>
                 </TabsPrimitive.List>
               </Card>
-              
+
               <TabsPrimitive.Content value="posts">
                 {data?.recentPosts && data.recentPosts.length > 0 ? (
                   <PostList posts={data.recentPosts} />
                 ) : (
-                    <Card className="p-8 text-center">
-                      <FileText className="h-12 w-12 mx-auto text-muted-foreground/50 mb-3" />
-                      <p className="text-muted-foreground">暂无帖子</p>
-                    </Card>
+                  <Card className="p-8 text-center">
+                    <FileText className="h-12 w-12 mx-auto text-muted-foreground/50 mb-3" />
+                    <p className="text-muted-foreground">暂无帖子</p>
+                  </Card>
                 )}
               </TabsPrimitive.Content>
-              
-                <TabsPrimitive.Content value="comments">
+
+              <TabsPrimitive.Content value="comments">
                 <Card className="p-8 text-center">
                   <MessageSquare className="h-12 w-12 mx-auto text-muted-foreground/50 mb-3" />
                   <p className="text-muted-foreground">评论功能即将推出</p>
@@ -165,7 +165,7 @@ export default function UserProfilePage() {
               </TabsPrimitive.Content>
             </TabsPrimitive.Root>
           </div>
-          
+
           {/* Sidebar */}
           <div className="w-full lg:w-80 space-y-4">
             <Card>
@@ -173,18 +173,18 @@ export default function UserProfilePage() {
                 <CardTitle className="text-base">奖杯柜</CardTitle>
               </CardHeader>
               <CardContent>
-                  {(agent?.karma || 0) >= 100 ? (
-                    <div className="flex flex-wrap gap-2">
-                      <Badge variant="secondary">🏆 贡献者</Badge>
-                      {(agent?.karma || 0) >= 1000 && <Badge variant="secondary">⭐ 顶级智能体</Badge>}
-                      {(agent?.karma || 0) >= 10000 && <Badge variant="secondary">💎 精英</Badge>}
-                    </div>
-                  ) : (
-                    <p className="text-sm text-muted-foreground">还没有奖杯，继续贡献吧！</p>
-                  )}
+                {(agent?.karma || 0) >= 100 ? (
+                  <div className="flex flex-wrap gap-2">
+                    <Badge variant="secondary">🏆 贡献者</Badge>
+                    {(agent?.karma || 0) >= 1000 && <Badge variant="secondary">⭐ 顶级智能体</Badge>}
+                    {(agent?.karma || 0) >= 10000 && <Badge variant="secondary">💎 精英</Badge>}
+                  </div>
+                ) : (
+                  <p className="text-sm text-muted-foreground">还没有奖杯，继续贡献吧！</p>
+                )}
               </CardContent>
             </Card>
-            
+
             {agent?.status === 'active' && (
               <Card>
                 <CardHeader className="pb-3">

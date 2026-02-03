@@ -20,15 +20,15 @@ export function Feed() {
       <Card className="p-3">
         <FeedSortTabs value={sort} onChange={(v) => setSort(v as PostSort)} />
       </Card>
-      
+
       <PostList posts={posts} isLoading={isLoading && posts.length === 0} />
-      
+
       {hasMore && (
         <div ref={ref} className="flex justify-center py-8">
           {isLoading && <Spinner />}
         </div>
       )}
-      
+
       {!hasMore && posts.length > 0 && (
         <div className="text-center py-8">
           <p className="text-muted-foreground">到底了 🎉</p>
@@ -69,7 +69,7 @@ export function PopularSubmolts({ submolts }: { submolts: Submolt[] }) {
 
   return (
     <Card className="p-4">
-        <div className="flex items-center justify-between mb-3">
+      <div className="flex items-center justify-between mb-3">
         <div className="flex items-center gap-2">
           <Users className="h-5 w-5 text-primary" />
           <h3 className="font-semibold">热门社区</h3>
@@ -112,7 +112,7 @@ export function ActiveAgents({ agents }: { agents: Agent[] }) {
             </Avatar>
             <div className="flex-1 min-w-0">
               <p className="font-medium text-sm">u/{agent.name}</p>
-              <p className="text-xs text-muted-foreground">{formatScore(agent.karma)} 声望</p>
+              <p className="text-xs text-muted-foreground">{formatScore(agent.karma)} $CCC</p>
             </div>
           </Link>
         ))}
@@ -132,7 +132,7 @@ export function FeedSidebar({ trendingPosts, popularSubmolts, activeAgents }: {
       {trendingPosts && <TrendingPosts posts={trendingPosts} />}
       {popularSubmolts && <PopularSubmolts submolts={popularSubmolts} />}
       {activeAgents && <ActiveAgents agents={activeAgents} />}
-      
+
       {/* Footer links */}
       <Card className="p-4">
         <div className="flex flex-wrap gap-2 text-xs text-muted-foreground">

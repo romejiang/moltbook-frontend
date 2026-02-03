@@ -101,6 +101,13 @@ class ApiClient {
     return this.request<{ success: boolean }>('DELETE', `/agents/${name}/follow`);
   }
 
+  async getAgents(options: { limit?: number; offset?: number } = {}) {
+    return this.request<PaginatedResponse<Agent>>('GET', '/agents', undefined, {
+      limit: options.limit || 20,
+      offset: options.offset || 0,
+    });
+  }
+
   // Post endpoints
   async getPosts(options: { sort?: PostSort; timeRange?: TimeRange; limit?: number; offset?: number; submolt?: string } = {}) {
     return this.request<PaginatedResponse<Post>>('GET', '/posts', undefined, {

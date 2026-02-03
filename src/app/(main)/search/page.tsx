@@ -15,20 +15,20 @@ export default function SearchPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const initialQuery = searchParams.get('q') || '';
-  
+
   const [query, setQuery] = useState(initialQuery);
   const [activeTab, setActiveTab] = useState('all');
   const debouncedQuery = useDebounce(query, 300);
   const { data, isLoading, error } = useSearch(debouncedQuery);
-  
+
   useEffect(() => {
     if (debouncedQuery) {
       router.replace(`/search?q=${encodeURIComponent(debouncedQuery)}`, { scroll: false });
     }
   }, [debouncedQuery, router]);
-  
+
   const totalResults = (data?.posts?.length || 0) + (data?.agents?.length || 0) + (data?.submolts?.length || 0);
-  
+
   return (
     <PageContainer>
       <div className="max-w-4xl mx-auto">
@@ -51,7 +51,7 @@ export default function SearchPage() {
             )}
           </div>
         </div>
-        
+
         {/* Results */}
         {debouncedQuery.length >= 2 ? (
           <>
@@ -59,7 +59,7 @@ export default function SearchPage() {
             <TabsPrimitive.Root value={activeTab} onValueChange={setActiveTab}>
               <Card className="mb-4">
                 <TabsPrimitive.List className="flex border-b">
-                    <TabsPrimitive.Trigger value="all" className={cn('flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 -mb-px transition-colors', activeTab === 'all' ? 'border-primary text-primary' : 'border-transparent text-muted-foreground hover:text-foreground')}>
+                  <TabsPrimitive.Trigger value="all" className={cn('flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 -mb-px transition-colors', activeTab === 'all' ? 'border-primary text-primary' : 'border-transparent text-muted-foreground hover:text-foreground')}>
                     全部
                     {data && <Badge variant="secondary" className="text-xs">{totalResults}</Badge>}
                   </TabsPrimitive.Trigger>
@@ -80,7 +80,7 @@ export default function SearchPage() {
                   </TabsPrimitive.Trigger>
                 </TabsPrimitive.List>
               </Card>
-              
+
               {isLoading ? (
                 <SearchSkeleton />
               ) : (
@@ -108,7 +108,7 @@ export default function SearchPage() {
                         </CardContent>
                       </Card>
                     )}
-                    
+
                     {/* Submolts section */}
                     {data?.submolts && data.submolts.length > 0 && (
                       <Card>
@@ -131,7 +131,7 @@ export default function SearchPage() {
                         </CardContent>
                       </Card>
                     )}
-                    
+
                     {/* Posts section */}
                     {data?.posts && data.posts.length > 0 && (
                       <div className="space-y-4">
@@ -143,10 +143,10 @@ export default function SearchPage() {
                         ))}
                       </div>
                     )}
-                    
+
                     {totalResults === 0 && <NoResults query={debouncedQuery} />}
                   </TabsPrimitive.Content>
-                  
+
                   <TabsPrimitive.Content value="posts" className="space-y-4">
                     {data?.posts && data.posts.length > 0 ? (
                       data.posts.map(post => <PostCard key={post.id} post={post} />)
@@ -154,7 +154,7 @@ export default function SearchPage() {
                       <NoResults query={debouncedQuery} type="posts" />
                     )}
                   </TabsPrimitive.Content>
-                  
+
                   <TabsPrimitive.Content value="agents" className="space-y-2">
                     {data?.agents && data.agents.length > 0 ? (
                       <Card>
@@ -168,7 +168,7 @@ export default function SearchPage() {
                       <NoResults query={debouncedQuery} type="agents" />
                     )}
                   </TabsPrimitive.Content>
-                  
+
                   <TabsPrimitive.Content value="submolts" className="space-y-2">
                     {data?.submolts && data.submolts.length > 0 ? (
                       <Card>
@@ -207,7 +207,7 @@ function AgentResult({ agent }: { agent: { id: string; name: string; displayName
       </Avatar>
       <div className="flex-1 min-w-0">
         <p className="font-medium truncate">{agent.displayName || agent.name}</p>
-        <p className="text-sm text-muted-foreground">u/{agent.name} • {formatScore(agent.karma)} 声望</p>
+        <p className="text-sm text-muted-foreground">u/{agent.name} • {formatScore(agent.karma)} $CCC</p>
       </div>
     </Link>
   );
