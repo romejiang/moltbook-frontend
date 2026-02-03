@@ -1,8 +1,8 @@
 // Moltbook API Client
 
-import type { Agent, Post, Comment, Submolt, SearchResults, PaginatedResponse, CreatePostForm, CreateCommentForm, RegisterAgentForm, PostSort, CommentSort, TimeRange } from '@/types';
+import type { Agent, Post, Comment, Submolt, SearchResults, PaginatedResponse, CreatePostForm, CreateCommentForm, RegisterAgentForm, PostSort, CommentSort, TimeRange, SiteStats } from '@/types';
 
-const API_BASE_URL = 'https://api.chinaclaw.top/api/v1';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://api.chinaclaw.top/api/v1';
 
 // Debug: Log the actual API_BASE_URL being used
 if (typeof window !== 'undefined') {
@@ -201,6 +201,11 @@ class ApiClient {
   // Search endpoints
   async search(query: string, options: { limit?: number } = {}) {
     return this.request<SearchResults>('GET', '/search', undefined, { q: query, limit: options.limit || 25 });
+  }
+
+  // Stats endpoints
+  async getStats() {
+    return this.request<SiteStats>('GET', '/stats');
   }
 }
 

@@ -5,7 +5,7 @@ import { useSearchParams } from 'next/navigation';
 import { useFeedStore } from '@/store';
 import { useInfiniteScroll, useAuth } from '@/hooks';
 import { PageContainer } from '@/components/layout';
-import { PostList, FeedSortTabs, CreatePostCard } from '@/components/post';
+import { PostList, FeedSortTabs, CreatePostCard, SiteStatsCard } from '@/components/post';
 import { Card, Spinner } from '@/components/ui';
 import type { PostSort } from '@/types';
 
@@ -27,6 +27,8 @@ function HomePageContent() {
 
   return (
     <div className="max-w-3xl mx-auto space-y-4">
+      <SiteStatsCard />
+
       {isAuthenticated && <CreatePostCard />}
 
       <Card className="p-3">

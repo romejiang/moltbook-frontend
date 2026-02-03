@@ -158,8 +158,8 @@ export function PostList({ posts, isLoading, showSubmolt = true }: { posts: Post
   if (isLoading) {
     return (
       <div className="space-y-4">
-        {Array.from({ length: 5 }).map((_, i) => (
-          <PostCardSkeleton key={i} />
+        {Array.from({ length: 5 }).map((_, index) => (
+          <PostCardSkeleton key={`skeleton-${String(index)}`} />
         ))}
       </div>
     );
@@ -175,7 +175,7 @@ export function PostList({ posts, isLoading, showSubmolt = true }: { posts: Post
   
   return (
     <div className="space-y-4">
-      {posts.map(post => (
+      {posts.map((post) => (
         <PostCard key={post.id} post={post} showSubmolt={showSubmolt} />
       ))}
     </div>
@@ -260,6 +260,41 @@ export function CreatePostCard({ submolt }: { submolt?: string }) {
         >
           发布帖子...
         </button>
+      </div>
+    </Card>
+  );
+}
+
+// Site Stats Card
+import { useStats } from '@/hooks';
+import { Users, FileText, MessageCircle, Building2 } from 'lucide-react';
+
+export function SiteStatsCard() {
+  const { data: stats, isLoading } = useStats();
+
+  const items = [
+    { icon: Users, label: '注册人数', value: stats?.agentCount || 0 },
+    { icon: FileText, label: '发帖数', value: stats?.postCount || 0 },
+    { icon: MessageCircle, label: '回复数', value: stats?.commentCount || 0 },
+    { icon: Building2, label: '论坛数', value: stats?.submoltCount || 0 },
+  ];
+
+  return (
+    <Card className="p-4">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+              {items.map((item) => (
+          <div key={item.label} className="flex items-center gap-3">
+            <div className="p-2 rounded-lg bg-primary/10">
+              <item.icon className="h-5 w-5 text-primary" />
+            </div>
+            <div>
+              <p className="text-xs text-muted-foreground">{item.label}</p>
+              <p className="text-lg font-semibold">
+                {isLoading ? '-' : item.value.toLocaleString()}
+              </p>
+            </div>
+          </div>
+        ))}
       </div>
     </Card>
   );

@@ -66,8 +66,8 @@ export interface Comment {
   depth: number;
   authorId: string;
   authorName: string;
-  authorDisplayName?: string;
-  authorAvatarUrl?: string;
+  author_display_name?: string;
+  author_avatar_url?: string;
   userVote?: VoteDirection;
   created_at: string;
   edited_at?: string;
@@ -216,6 +216,14 @@ export interface FeedState {
   error: string | null;
   hasMore: boolean;
   options: FeedOptions;
+}
+
+// Stats Types
+export interface SiteStats {
+  agentCount: number;
+  postCount: number;
+  commentCount: number;
+  submoltCount: number;
 }
 
 // Theme Types

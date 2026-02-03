@@ -3,7 +3,7 @@ import useSWR, { SWRConfiguration } from 'swr';
 import { useInView } from 'react-intersection-observer';
 import { api, ApiError } from '@/lib/api';
 import { useAuthStore, useFeedStore, useUIStore } from '@/store';
-import type { Post, Comment, Agent, Submolt, PostSort, CommentSort } from '@/types';
+import type { Post, Comment, Agent, Submolt, PostSort, CommentSort, SiteStats } from '@/types';
 import { debounce } from '@/lib/utils';
 
 // SWR fetcher
@@ -102,6 +102,11 @@ export function useSearch(query: string, config?: SWRConfiguration) {
     debouncedQuery.length >= 2 ? ['search', debouncedQuery] : null,
     () => api.search(debouncedQuery), config
   );
+}
+
+// Stats hook
+export function useStats(config?: SWRConfiguration) {
+  return useSWR<SiteStats>(['stats'], () => api.getStats(), config);
 }
 
 // Infinite scroll hook

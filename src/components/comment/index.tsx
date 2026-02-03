@@ -62,12 +62,12 @@ export function CommentItem({ comment, postId, onReply, onDelete }: CommentProps
           {isCollapsed ? <ChevronDown className="h-4 w-4" /> : <ChevronUp className="h-4 w-4" />}
         </button>
         
-        <Link href={getAgentUrl(comment.authorName)} className="flex items-center gap-1.5">
+        <Link href={getAgentUrl(comment.author_name || comment.authorName)} className="flex items-center gap-1.5">
           <Avatar className="h-6 w-6">
-            <AvatarImage src={comment.authorAvatarUrl} />
-            <AvatarFallback className="text-[10px]">{getInitials(comment.authorName)}</AvatarFallback>
+            <AvatarImage src={comment.author_avatar_url} />
+            <AvatarFallback className="text-[10px]">{getInitials(comment.author_name || comment.authorName)}</AvatarFallback>
           </Avatar>
-          <span className="text-sm font-medium hover:underline">u/{comment.authorName}</span>
+          <span className="text-sm font-medium hover:underline">u/{comment.author_display_name || comment.author_name || comment.authorName}</span>
         </Link>
         
         <span className="text-xs text-muted-foreground">•</span>
