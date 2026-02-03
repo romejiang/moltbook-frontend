@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils';
 import { useAuth, useIsMobile, useKeyboardShortcut } from '@/hooks';
 import { useUIStore, useNotificationStore } from '@/store';
 import { Button, Avatar, AvatarImage, AvatarFallback, Input, Skeleton } from '@/components/ui';
+import { HeroSection } from '@/components/home';
 import { Home, Search, Bell, Plus, Menu, X, Settings, LogOut, User, Flame, Clock, TrendingUp, Zap, ChevronDown, Moon, Sun, Hash, Users } from 'lucide-react';
 import { getInitials } from '@/lib/utils';
 
@@ -17,10 +18,10 @@ export function Header() {
   const { unreadCount } = useNotificationStore();
   const isMobile = useIsMobile();
   const [showUserMenu, setShowUserMenu] = React.useState(false);
-  
+
   useKeyboardShortcut('k', openSearch, { ctrl: true });
   useKeyboardShortcut('n', openCreatePost, { ctrl: true });
-  
+
   return (
     <header className="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container-main flex h-14 items-center justify-between gap-4">
@@ -38,7 +39,7 @@ export function Header() {
             {!isMobile && <span className="gradient-text">China Claw</span>}
           </Link>
         </div>
-        
+
         {/* Search */}
         {!isMobile && (
           <div className="flex-1 max-w-md">
@@ -49,7 +50,7 @@ export function Header() {
             </button>
           </div>
         )}
-        
+
         {/* Actions */}
         <div className="flex items-center gap-2">
           {isMobile && (
@@ -57,7 +58,7 @@ export function Header() {
               <Search className="h-5 w-5" />
             </Button>
           )}
-          
+
           {isAuthenticated ? (
             <>
               <Button variant="ghost" size="icon" className="relative">
@@ -68,12 +69,12 @@ export function Header() {
                   </span>
                 )}
               </Button>
-              
+
               <Button onClick={openCreatePost} size="sm" className="gap-1">
                 <Plus className="h-4 w-4" />
                 {!isMobile && '发布'}
               </Button>
-              
+
               <div className="relative">
                 <button onClick={() => setShowUserMenu(!showUserMenu)} className="flex items-center gap-2 p-1 rounded-md hover:bg-muted transition-colors">
                   <Avatar className="h-8 w-8">
@@ -82,7 +83,7 @@ export function Header() {
                   </Avatar>
                   {!isMobile && <ChevronDown className="h-4 w-4 text-muted-foreground" />}
                 </button>
-                
+
                 {showUserMenu && (
                   <div className="absolute right-0 top-full mt-2 w-56 rounded-md border bg-popover p-1 shadow-lg animate-in fade-in-0 zoom-in-95">
                     <div className="px-3 py-2 border-b mb-1">
@@ -125,7 +126,7 @@ export function Sidebar() {
   const currentSort = searchParams.get('sort');
   const { sidebarOpen } = useUIStore();
   const { isAuthenticated } = useAuth();
-  
+
   const mainLinks = [
     { href: '/', label: '首页', icon: Home, isActive: pathname === '/' && !currentSort },
     { href: '/?sort=hot', label: '热门', icon: Flame, isActive: pathname === '/' && currentSort === 'hot' },
@@ -133,7 +134,7 @@ export function Sidebar() {
     { href: '/?sort=top', label: '最佳', icon: Zap, isActive: pathname === '/' && currentSort === 'top' },
     { href: '/?sort=rising', label: '上升', icon: TrendingUp, isActive: pathname === '/' && currentSort === 'rising' },
   ];
-  
+
   const popularSubmolts = [
     { name: 'general', displayName: '综合' },
     { name: 'announcements', displayName: '公告' },
@@ -141,9 +142,9 @@ export function Sidebar() {
     { name: 'help', displayName: '帮助' },
     { name: 'meta', displayName: '元社区' },
   ];
-  
+
   if (!sidebarOpen) return null;
-  
+
   return (
     <aside className="sticky top-14 h-[calc(100vh-3.5rem)] w-64 shrink-0 border-r bg-background overflow-y-auto scrollbar-hide hidden lg:block">
       <nav className="p-4 space-y-6">
@@ -159,7 +160,7 @@ export function Sidebar() {
             );
           })}
         </div>
-        
+
         {/* Popular Submolts */}
         <div>
           <h3 className="px-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">热门社区</h3>
@@ -175,7 +176,7 @@ export function Sidebar() {
             })}
           </div>
         </div>
-        
+
         {/* Explore */}
         <div>
           <h3 className="px-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">探索</h3>
@@ -200,9 +201,9 @@ export function MobileMenu() {
   const pathname = usePathname();
   const { mobileMenuOpen, toggleMobileMenu } = useUIStore();
   const { agent, isAuthenticated } = useAuth();
-  
+
   if (!mobileMenuOpen) return null;
-  
+
   return (
     <div className="fixed inset-0 z-50 lg:hidden">
       <div className="fixed inset-0 bg-black/50" onClick={toggleMobileMenu} />
@@ -222,7 +223,7 @@ export function MobileMenu() {
               </div>
             </div>
           )}
-          
+
           <div className="space-y-1">
             <Link href="/" onClick={toggleMobileMenu} className={cn('flex items-center gap-3 px-3 py-2 rounded-md', pathname === '/' && 'bg-muted font-medium')}>
               <Home className="h-4 w-4" /> 首页
@@ -267,11 +268,16 @@ export function PageContainer({ children, className }: { children: React.ReactNo
 }
 
 // Main Layout
+// Main Layout
 export function MainLayout({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+  const isHomePage = pathname === '/';
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      <div className="flex-1 flex">
+      {isHomePage && <HeroSection />}
+      <div className={cn("flex-1 flex", isHomePage && "border-t")}>
         <Sidebar />
         <main className="flex-1 container-main">{children}</main>
       </div>
