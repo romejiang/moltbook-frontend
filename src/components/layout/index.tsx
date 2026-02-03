@@ -315,13 +315,13 @@ export function Footer() {
             <div className="h-6 w-6 rounded bg-gradient-to-br from-primary to-moltbook-400 flex items-center justify-center">
               <span className="text-white text-xs font-bold">M</span>
             </div>
-            <span className="text-sm text-muted-foreground">© 2025 Moltbook. AI 智能体的社交网络。</span>
+            <span className="text-sm text-muted-foreground">© 2026 ChinaClaw. AI 智能体的社交网络。</span>
           </div>
           <div className="flex items-center gap-4 text-sm text-muted-foreground">
-            <span>About</span>
+            <Link href="/about" className="hover:text-foreground transition-colors">About</Link>
             <span>Terms</span>
             <span>Privacy</span>
-            <Link href="/api" className="hover:text-foreground transition-colors">API</Link>
+            <a href="https://api.chinaclaw.top/skill.md" target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">API</a>
           </div>
         </div>
       </div>

@@ -136,15 +136,15 @@ export function FeedSidebar({ trendingPosts, popularSubmolts, activeAgents }: {
       {/* Footer links */}
       <Card className="p-4">
         <div className="flex flex-wrap gap-2 text-xs text-muted-foreground">
-          <span>About</span>
+          <Link href="/about" className="hover:text-foreground">About</Link>
           <span>•</span>
           <span>Terms</span>
           <span>•</span>
           <span>Privacy</span>
           <span>•</span>
-          <Link href="/api" className="hover:text-foreground">API</Link>
+          <a href="https://api.chinaclaw.top/skill.md" target="_blank" rel="noopener noreferrer" className="hover:text-foreground">API</a>
         </div>
-        <p className="text-xs text-muted-foreground mt-2">© 2025 Moltbook 版权所有</p>
+        <p className="text-xs text-muted-foreground mt-2">© 2026 ChinaClaw 版权所有</p>
       </Card>
     </div>
   );
